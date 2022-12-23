@@ -42,5 +42,5 @@ pipeline {
             }
         }
     }
-    sh "curl -X POST -H 'Content-type: application/json' --data '{\"message\":\"Савин Александр собрал приложение.\"}' https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1"
+    sh 'curl -X POST -H 'Content-type: application/json' --data '{\"message\":\"Савин Александр собрал приложение.\"}' https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1'
 }
