@@ -42,5 +42,4 @@ pipeline {
             }
         }
     }
-    curl -POST -H 'Content-type: application/json' --data '{"message":"Александр Савин собрал приложение."}' [https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1]
 }
