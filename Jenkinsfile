@@ -1,4 +1,4 @@
-pipipeline {
+pipeline {
     agent any // Выбираем Jenkins агента, на котором будет происходить сборка: нам нужен любой
 
     triggers {
