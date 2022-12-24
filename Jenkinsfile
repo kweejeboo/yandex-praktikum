@@ -1,4 +1,4 @@
-pipeline {
+pipipeline {
     agent any // Выбираем Jenkins агента, на котором будет происходить сборка: нам нужен любой
 
     triggers {
@@ -41,6 +41,11 @@ pipeline {
                 archiveArtifacts(artifacts: 'frontend/dist/frontend/*')
             }
         }
+
+        stage('Add Notification'){
+             steps {
+                sh 'curl -X POST -H 'Content-type: application/json' --data '{\"message\":\"Савин Александр собрал приложение.\"}' https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1'
+            }
+        }
     }
-    sh 'curl -X POST -H 'Content-type: application/json' --data '{\"message\":\"Савин Александр собрал приложение.\"}' https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1'
 }
