@@ -18,7 +18,7 @@ pachca-notification-backend:
       - backend/*
   script:
     - 'curl -X POST -H "Content-type: application/json" --data
-      "{\"message\":\"Савин Александр собрал бэк.\"}"
+      "{\"message\":\"Кто-то что-то вроде бы собрал.\"}"
       "https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1"'
   needs:
     - build-backend-code-job
