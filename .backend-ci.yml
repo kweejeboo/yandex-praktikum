@@ -1,0 +1,22 @@
+build-backend-code-job:
+  stage: build
+  only:
+    changes:
+      - backend/*
+  script:
+    - cd backend
+    - mvn package
+  artifacts:
+    paths:
+      - backend/target/sausage-store-0.0.1-SNAPSHOT.jar
+pachca-notification-backend:
+  stage: notify
+  only:
+    changes:
+      - backend/*
+  script:
+    - 'curl -X POST -H "Content-type: application/json" --data
+      "{\"message\":\"Савин Александр собрал бэк.\"}"
+      "https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1"'
+  needs:
+    - build-backend-code-job
