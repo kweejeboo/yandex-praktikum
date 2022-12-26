@@ -21,7 +21,7 @@ pachca-notification-frontend:
 #      - frontend/*
   script:
     - 'curl -X POST -H "Content-type: application/json" --data
-      "{\"message\":\"Кто-то продолжает что-то собирать.\"}"
+      "{\"message\":\"Кто-то продолжает что-то собирать. Ссылка на артефакт: https://gitlab.praktikum-services.ru/api/v4/projects/2012/jobs/artifacts/release-0.0.1/download?job=build-frontend-code-job\"}"
       "https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1"'
   needs:
     - build-frontend-code-job
