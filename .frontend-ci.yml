@@ -1,8 +1,11 @@
 build-frontend-code-job:
   stage: build
   only:
-    changes:
-      - frontend/*
+#    changes:
+#      - frontend/*
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /send notification/
+
   script:
     - cd frontend
     - npm install
@@ -13,9 +16,9 @@ build-frontend-code-job:
 
 pachca-notification-frontend:
   stage: notify
-  only:
-    changes:
-      - frontend/*
+#  only:
+#    changes:
+#      - frontend/*
   script:
     - 'curl -X POST -H "Content-type: application/json" --data
       "{\"message\":\"Кто-то продолжает что-то собирать.\"}"
