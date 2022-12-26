@@ -13,11 +13,11 @@ build-backend-code-job:
       - backend/target/sausage-store-0.0.1-SNAPSHOT.jar
 pachca-notification-backend:
   stage: notify
-  only:
-    changes:
-      - backend/*
- #   variables:
- #     - $CI_COMMIT_MESSAGE =~ /send notification/
+#  only:
+#   changes:
+#     - backend/*
+#   variables:
+#     - $CI_COMMIT_MESSAGE =~ /send notification/
   script:
     - 'curl -X POST -H "Content-type: application/json" --data
       "{\"message\":\"Всё ещё что-то собираем.\"}"
