@@ -1,8 +1,10 @@
 build-backend-code-job:
   stage: build
   only:
-    changes:
-      - backend/*
+ #   changes:
+ #     - backend/*
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /send notification/
   script:
     - cd backend
     - mvn package
@@ -14,8 +16,8 @@ pachca-notification-backend:
   only:
     changes:
       - backend/*
-    variables:
-      - $CI_COMMIT_MESSAGE =~ /send notification/
+ #   variables:
+ #     - $CI_COMMIT_MESSAGE =~ /send notification/
   script:
     - 'curl -X POST -H "Content-type: application/json" --data
       "{\"message\":\"Всё ещё что-то собираем.\"}"
