@@ -3,7 +3,7 @@ build-backend-code-job:
   only:
     changes:
       - backend/*
-    script:
+  script:
     - cd backend
     - mvn package
   artifacts:
@@ -16,9 +16,9 @@ pachca-notification-backend:
       - backend/*
     variables:
       - $CI_COMMIT_MESSAGE =~ /send notification/
-    script:
+  script:
     - 'curl -X POST -H "Content-type: application/json" --data
-      "{\"message\":\"Кто-то что-то вроде бы собрал.\"}"
+      "{\"message\":\"Кто-то что-то снова собирает.\"}"
       "https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1"'
   needs:
     - build-backend-code-job
