@@ -18,7 +18,7 @@ pachca-notification-frontend:
       - frontend/*
   script:
     - 'curl -X POST -H "Content-type: application/json" --data
-      "{\"message\":\"Савин Александр собрал фронт.\"}"
+      "{\"message\":\"Кто-то продолжает что-то собирать.\"}"
       "https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1"'
   needs:
     - build-frontend-code-job
