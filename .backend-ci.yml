@@ -1,8 +1,6 @@
 build-backend-code-job:
   stage: build
   only:
- #   changes:
- #     - backend/*
     variables:
       - $CI_COMMIT_MESSAGE =~ /send notification/
   script:
@@ -13,14 +11,9 @@ build-backend-code-job:
       - backend/target/sausage-store-0.0.1-SNAPSHOT.jar
 pachca-notification-backend:
   stage: notify
-#  only:
-#   changes:
-#     - backend/*
-#   variables:
-#     - $CI_COMMIT_MESSAGE =~ /send notification/
   script:
     - 'curl -X POST -H "Content-type: application/json" --data
-      "{\"message\":\"Всё ещё что-то собираем. Ссылка на артефакт: https://gitlab.praktikum-services.ru/api/v4/projects/2012/jobs/artifacts/release-0.0.1/download?job=build-backend-code-job\"}"
+      "{\"message\":\"Всё ещё что-то собираем. Ссылка на артефакт: https://gitlab.praktikum-services.ru/api/v4/projects/$CI_PROJECT_ID/jobs/artifacts/$CI_DEFAULT_BRANCH/download?job=build-backend-code-job\"}"
       "https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1"'
   needs:
     - build-backend-code-job
