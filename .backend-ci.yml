@@ -26,8 +26,6 @@ spotbugs-sast:
 
 sonarqube-backend-sast:
   stage: test
-  dependencies:
-    - build-backend-code-job
   image: maven:3.8-openjdk-16 # тот самый docker-образ, о котором мы все узнаем в будущем
   script:
     - cd backend
