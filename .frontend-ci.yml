@@ -12,6 +12,15 @@ build-frontend-code-job:
     paths:
       - frontend/dist/frontend
 
+sonar-scanner:
+  stage: test
+  script:
+  -Dsonar.projectKey=${SONAR_PROJECT_KEY}
+  -Dsonar.sources=. 
+  -Dsonar.host.url=${SONARQUBE_URL}
+  -Dsonar.login=${SONAR_LOGIN}
+  -Dsonar.qualitygate.wait=true
+
 pachca-notification-frontend:
   stage: notify
   script:
