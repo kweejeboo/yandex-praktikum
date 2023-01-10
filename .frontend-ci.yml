@@ -24,7 +24,7 @@ sonar-scanner:
       -Dsonar.sources=. 
       -Dsonar.host.url=${SONARQUBE_URL}
       -Dsonar.login=${SONAR_LOGIN_FRONTEND}
-      -Dsonar.java.binaries= **/*.java
+      
     
 
 pachca-notification-frontend:
