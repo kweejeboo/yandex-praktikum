@@ -1,5 +1,6 @@
 ---
 include:
+  - template: Security/SAST.gitlab-ci.yml
   - local: '/.backend-ci.yml'
   - local: '/.frontend-ci.yml'
 
@@ -7,3 +8,4 @@ include:
 stages:
   - build
   - notify
+  - test
