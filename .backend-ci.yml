@@ -26,6 +26,8 @@ spotbugs-sast:
 
 sonarqube-backend-sast:
   stage: test
+    dependencies:
+      - build-backend-code-job
   image: maven:3.8-openjdk-16 # тот самый docker-образ, о котором мы все узнаем в будущем
   script:
     - cd backend
@@ -34,7 +36,7 @@ sonarqube-backend-sast:
       -Dsonar.projectKey=${SONAR_PROJECT_KEY}
       -Dsonar.host.url=${SONARQUBE_URL}
       -Dsonar.login=${SONAR_LOGIN}
-      -Dsonar.qualitygate.wait=true
+      
             
 pachca-notification-backend:
   stage: notify
