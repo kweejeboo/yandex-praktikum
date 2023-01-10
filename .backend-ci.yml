@@ -9,6 +9,13 @@ build-backend-code-job:
   artifacts:
     paths:
       - backend/target/sausage-store-0.0.1-SNAPSHOT.jar
+      - ${CI_PROJECT_DIR}/.m2/ # сохранение зависимостей для SAST 
+spotbugs-sast:
+  stage: test
+  variables:
+    COMPILE: "false"
+    SAST_JAVA_VERSION: 16
+    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository # не забудьте при сборке также указывать эту папку через аргумент -Dmaven.repo.local
 pachca-notification-backend:
   stage: notify
   script:
