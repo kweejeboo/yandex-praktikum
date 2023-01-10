@@ -43,5 +43,5 @@ pachca-notification-backend:
       "{\"message\":\"Всё ещё что-то собираем. Ссылка на артефакт: https://gitlab.praktikum-services.ru/api/v4/projects/$CI_PROJECT_ID/jobs/artifacts/$CI_DEFAULT_BRANCH/download?job=build-backend-code-job\"}"
       "https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1"'
   needs:
-    - spotbugs-sast
+    - build-backend-code-job
 
