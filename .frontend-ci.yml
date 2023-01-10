@@ -14,6 +14,7 @@ build-frontend-code-job:
 
 sonar-scanner:
   stage: test
+  image: sonarsource/sonar-scanner-cli:latest
   script:
     -Dsonar.projectKey=${SONAR_PROJECT_FRONTEND_KEY}
     -Dsonar.sources=. 
