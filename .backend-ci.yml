@@ -23,7 +23,19 @@ spotbugs-sast:
   artifacts:
     reports:
       sast: gl-sast-report.json
-      
+
+sonarqube-backend-sast:
+  stage: test
+  image: maven:3.8-openjdk-16 # тот самый docker-образ, о котором мы все узнаем в будущем
+  script:
+    - cd backend
+    - >
+      mvn verify sonar:sonar -Dsonar.qualitygate.wait=true
+      -Dsonar.projectKey=${SONAR_PROJECT_KEY}
+      -Dsonar.host.url=${SONARQUBE_URL}
+      -Dsonar.login=${SONAR_LOGIN}
+      -Dsonar.qualitygate.wait=true
+            
 pachca-notification-backend:
   stage: notify
   script:
