@@ -1,8 +1,5 @@
 build-backend-code-job:
   stage: build
-  only:
-    changes:
-      - backend/*
   script:
     - cd backend
     - mvn package "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository"
@@ -30,9 +27,10 @@ sonarqube-backend-sast:
     - cd backend
     - >
       mvn verify sonar:sonar -Dsonar.qualitygate.wait=true
-      -Dsonar.projectKey=${SONAR_PROJECT_KEY}
+      -Dsonar.projectKey=${SONAR_PROJECT_BACKEND_KEY}
       -Dsonar.host.url=${SONARQUBE_URL}
       -Dsonar.login=${SONAR_LOGIN}
+      -Dsonar.projectName=${SONAR_PROJECT_BACKEND_NAME}
       
             
 pachca-notification-backend:
