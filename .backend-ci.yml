@@ -1,8 +1,8 @@
 build-backend-code-job:
   stage: build
   only:
-    variables:
-      - $CI_COMMIT_MESSAGE =~ /send notification/
+    changes:
+      - backend/*
   script:
     - cd backend
     - mvn package "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository"
@@ -13,9 +13,8 @@ build-backend-code-job:
       - ${CI_PROJECT_DIR}/.m2/ # сохранение зависимостей для SAST 
 spotbugs-sast:
   stage: test
-  rules:
-    changes:
-      - backend/*
+  dependencies:
+    - build-backend-code-job
   variables:
     COMPILE: "false"
     SAST_JAVA_VERSION: 16
@@ -34,8 +33,6 @@ sonarqube-backend-sast:
       -Dsonar.projectKey=${SONAR_PROJECT_KEY}
       -Dsonar.host.url=${SONARQUBE_URL}
       -Dsonar.login=${SONAR_LOGIN}
-  needs:
-    - build-backend-code-job
       
             
 pachca-notification-backend:
@@ -44,6 +41,6 @@ pachca-notification-backend:
     - 'curl -X POST -H "Content-type: application/json" --data
       "{\"message\":\"Всё ещё что-то собираем. Ссылка на артефакт: https://gitlab.praktikum-services.ru/api/v4/projects/$CI_PROJECT_ID/jobs/artifacts/$CI_DEFAULT_BRANCH/download?job=build-backend-code-job\"}"
       "https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1"'
-  dependencies:
-    - build-backend-code-job
+  needs:
+    - sonarqube-backend-sast
 
