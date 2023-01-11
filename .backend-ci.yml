@@ -1,10 +1,10 @@
 build-backend-code-job:
   stage: build
-  only:
+  rules:
+    - if $CI_COMMIT_MESSAGE =~ /send notification/
     changes:
       - backend/*
-    variables:
-      - $CI_COMMIT_MESSAGE =~ /send notification/
+    
   script:
     - cd backend
     - mvn package "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository"
