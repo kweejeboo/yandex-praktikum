@@ -39,7 +39,6 @@ upload-frontend-release:
 pachca-notification-frontend:
   stage: notify
   script:
-    - 'curl -X POST -H "Content-type: application/json" --data
-      "{\"message\":\"Кто-то продолжает что-то собирать. Ссылка на артефакт: https://gitlab.praktikum-services.ru/api/v4/projects/$CI_PROJECT_ID/jobs/artifacts/$CI_DEFAULT_BRANCH/download?job=build-frontend-code-job\"}"
-      "https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1"'
+    - 'curl -X POST -H "Content-type: application/json" --data "{\"chat_id\": \"-1001860249898\", \"text\": \"Вышла новая версия фронтенда сосисочной - $VERSION. Скачать фронтенд можно по ссылке — ${NEXUS_FRONTEND_REPO_URL}/${VERSION}/sausage-store-${VERSION}.tar.gz\"}" https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage'
+
 
