@@ -6,13 +6,14 @@ build-backend-code-job:
      
   script:
     - cd backend
-    - mvn package "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -s settings.xml"
-    - mvn package "-Dversion.application=${VERSION} -DskipTests deploy"
+    - mvn package "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository"
+
     
   artifacts:
     paths:
       - backend/target/sausage-store-0.0.1-SNAPSHOT.jar
       - ${CI_PROJECT_DIR}/.m2/ # сохранение зависимостей для SAST 
+
 spotbugs-sast:
   stage: test
   needs:
@@ -39,6 +40,17 @@ sonarqube-backend-sast:
       -Dsonar.login=${SONAR_LOGIN_BACKEND}
       -Dsonar.projectName=${SONAR_PROJECT_BACKEND_NAME}
       
+
+upload-backend-release:
+  stage: release
+  only:
+    changes:
+      - backend/*
+  needs:
+    - build-backend-code-job
+  script:
+    - cd backend
+    - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -s settings.xml -Dversion.application=${VERSION} -DskipTests deploy 
             
 pachca-notification-backend:
   stage: notify
@@ -47,5 +59,5 @@ pachca-notification-backend:
       "{\"message\":\"Всё ещё что-то собираем. Ссылка на артефакт: https://gitlab.praktikum-services.ru/api/v4/projects/$CI_PROJECT_ID/jobs/artifacts/$CI_DEFAULT_BRANCH/download?job=build-backend-code-job\"}"
       "https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1"'
   needs:
-    - sonarqube-backend-sast
+    - upload-backend-release
 
