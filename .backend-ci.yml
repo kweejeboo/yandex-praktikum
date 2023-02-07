@@ -61,9 +61,9 @@ upload-backend-release:
     - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -s settings.xml -Dversion.application=${VERSION} -DskipTests deploy 
             
 telegram-notification-backend:  
-stage: notify
-needs:
+  stage: notify
+  needs:
     - upload-backend-release
-script:
+  script:
     - 'curl -X POST -H "Content-type: application/json" --data "{\"chat_id\": \"-1001860249898\", \"text\": \"Вышла новая версия бэкенда сосисочной - $VERSION. Скачать backend можно по ссылке — ${NEXUS_BACKEND_REPO_URL}/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar\"}" https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs'
   
