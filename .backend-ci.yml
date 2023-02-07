@@ -11,11 +11,11 @@ build-backend-code-job:
   cache:
     key: "${CI_COMMIT_REF_SLUG}-backend-build"
     paths:
-      - ${CI_PROJECT_DIR}/.m2/repository # сохранение зависимостей для SAST 
+      - ${CI_PROJECT_DIR}/.m2 # сохранение зависимостей для SAST 
 
 spotbugs-sast:
   stage: test
-  needs:
+  dependencies:
     - build-backend-code-job
   variables:
     COMPILE: "false"
@@ -23,7 +23,7 @@ spotbugs-sast:
     MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository # не забудьте при сборке также указывать эту папку через аргумент -Dmaven.repo.local
   cache:
     key: "${CI_COMMIT_REF_SLUG}-backend-build"
-  artifacts:
+  artifacts:  
     reports:
       sast: gl-sast-report.json
 
