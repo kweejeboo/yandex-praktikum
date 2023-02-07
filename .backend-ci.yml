@@ -4,10 +4,13 @@ build-backend-code-job:
   script:
     - cd backend
     - mvn package "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository"
+    - mvn package "-Dversion.application=${VERSION}"
+    
     
   cache:
     key: "${CI_COMMIT_REF_SLUG}-backend-build"
     paths:
+      - backend/target/sausage-store-${VERSION}.jar
       - ${CI_PROJECT_DIR}/.m2 # сохранение зависимостей для SAST 
 
 spotbugs-sast:
