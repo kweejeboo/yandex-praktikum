@@ -15,7 +15,7 @@ sonar-scanner:
   needs:
     - build-frontend-code-job
   cache:
-    keys: frontend-build
+    key: frontend-build
   image:
     name: sonarsource/sonar-scanner-cli:latest
   script:
