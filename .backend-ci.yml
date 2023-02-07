@@ -17,9 +17,6 @@ build-backend-code-job:
 
 spotbugs-sast:
   stage: test
-  only:
-    changes:
-      - backend/*
   needs:
     - build-backend-code-job
   variables:
