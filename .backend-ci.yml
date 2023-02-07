@@ -11,7 +11,7 @@ build-backend-code-job:
   cache:
     key: backend-build
     paths:
-      - ${CI_PROJECT_DIR}/.m2/ # сохранение зависимостей для SAST 
+      - ${CI_PROJECT_DIR}/.m2/repository # сохранение зависимостей для SAST 
 
 spotbugs-sast:
   stage: test
