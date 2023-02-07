@@ -12,6 +12,7 @@
     <artifactId>sausage-store</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>sausage-store</name>
+    <url>${env.NEXUS_REPO_URL}/sausage-store/</url>
     <description>Backend for sausage-store</description>
     <properties>
         <java.version>16</java.version>
