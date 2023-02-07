@@ -3,7 +3,8 @@ build-backend-code-job:
      
   script:
     - cd backend
-    - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -s settings.xml -Dversion.application=${VERSION} -DskipTests deploy 
+    - mvn package "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -s settings.xml"
+    - mvn package "-Dversion.application=${VERSION} -DskipTests deploy"
     
   artifacts:
     paths:
