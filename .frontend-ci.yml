@@ -30,8 +30,9 @@ sonar-scanner:
 upload-frontend-release:
   stage: release
   
-  dependencies:
+  needs:
     - build-frontend-code-job
+    - sonar-scanner
   script:
     - cd frontend/dist
     - tar czvf sausage-store-${VERSION}.tar.gz frontend
