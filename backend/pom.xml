@@ -8,12 +8,18 @@
         <version>2.5.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <distributionManagement>
+  <repository>
+       <id>sausage-store</id>
+       <name>sausage-store</name>
+       <url>${env.NEXUS_REPO_URL}/sausage-store-savin-aleksandr-backend/</url>
+   </repository>
+</distributionManagement>
     <groupId>com.yandex.practicum.devops</groupId>
     <artifactId>sausage-store</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>sausage-store</name>
-    <url>${env.NEXUS_REPO_URL}/sausage-store-savin-aleksandr-backend</url>
-    <description>Backend for sausage-store</description>
+        <description>Backend for sausage-store</description>
     <properties>
         <java.version>16</java.version>
         <sonar.projectKey>test_manual</sonar.projectKey>
