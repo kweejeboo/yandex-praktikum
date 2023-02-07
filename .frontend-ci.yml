@@ -29,8 +29,7 @@ sonar-scanner:
       
 upload-frontend-release:
   stage: release
-  cache:
-    key: "${CI_COMMIT_REF_SLUG}-frontend-build"
+  
   needs:
     - build-frontend-code-job
   script:
