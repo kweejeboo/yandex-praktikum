@@ -29,9 +29,7 @@ spotbugs-sast:
 
 sonarqube-backend-sast:
   stage: test
-  only:
-    changes:
-      - backend/*   
+  
   needs:
     - build-backend-code-job
   image: maven:3.8-openjdk-16 # тот самый docker-образ, о котором мы все узнаем в будущем
@@ -47,10 +45,7 @@ sonarqube-backend-sast:
 
 upload-backend-release:
   stage: release
-  only:
-    changes:
-      - backend/*  
-
+  
   needs:
     - build-backend-code-job
   script:
