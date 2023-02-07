@@ -10,7 +10,7 @@ build-frontend-code-job:
     - .npm/ # для хранения зависимостей сборки фронтенда
   artifacts:
     name: "$CI_JOB_NAME"
-      paths:
+    paths:
       - frontend/dist/frontend
 
 sonar-scanner:
