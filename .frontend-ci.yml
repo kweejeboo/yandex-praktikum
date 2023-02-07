@@ -24,7 +24,17 @@ sonar-scanner:
       -Dsonar.host.url=${SONARQUBE_URL}
       -Dsonar.login=${SONAR_LOGIN_FRONTEND}
       
-    
+upload-frontend-release:
+  stage: release
+  only:
+    changes:
+    - frontend/*
+  needs:
+    - build-frontend-code-job
+  script:
+    - cd frontend/dist
+    - tar czvf sausage-store-${VERSION}.tar.gz frontend
+    - curl -v -u "${NEXUS_REPO_USER}:${NEXUS_REPO_PASS}" --upload-file sausage-store-${VERSION}.tar.gz ${NEXUS_REPO_URL}/sausage-store/${VERSION}/sausage-store-${VERSION}.tar.gz     
 
 pachca-notification-frontend:
   stage: notify
@@ -32,5 +42,4 @@ pachca-notification-frontend:
     - 'curl -X POST -H "Content-type: application/json" --data
       "{\"message\":\"Кто-то продолжает что-то собирать. Ссылка на артефакт: https://gitlab.praktikum-services.ru/api/v4/projects/$CI_PROJECT_ID/jobs/artifacts/$CI_DEFAULT_BRANCH/download?job=build-frontend-code-job\"}"
       "https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1"'
-  needs:
-    - sonar-scanner
+
