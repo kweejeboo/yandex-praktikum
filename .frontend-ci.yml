@@ -26,9 +26,7 @@ sonar-scanner:
       
 upload-frontend-release:
   stage: release
-  only:
-    changes:
-    - frontend/*
+  
   needs:
     - build-frontend-code-job
   script:
@@ -36,7 +34,7 @@ upload-frontend-release:
     - tar czvf sausage-store-${VERSION}.tar.gz frontend
     - curl -v -u "${NEXUS_REPO_USER}:${NEXUS_REPO_PASS}" --upload-file sausage-store-${VERSION}.tar.gz ${NEXUS_FRONTEND_REPO_URL}/${VERSION}/sausage-store-${VERSION}.tar.gz     
 
-pachca-notification-frontend:
+telegram-notification-frontend:
   stage: notify
   script:
     - 'curl -X POST -H "Content-type: application/json" --data "{\"chat_id\": \"-1001860249898\", \"text\": \"Вышла новая версия фронтенда сосисочной - $VERSION. Скачать фронтенд можно по ссылке — ${NEXUS_FRONTEND_REPO_URL}/${VERSION}/sausage-store-${VERSION}.tar.gz\"}" https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage'
