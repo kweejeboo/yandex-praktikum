@@ -51,10 +51,10 @@ upload-backend-release:
     - cd backend
     - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -s settings.xml -Dversion.application=${VERSION} -DskipTests deploy 
             
-pachca-notification-backend:
+telegram-notification-backend:
   stage: notify
   script:
     - 'curl -X POST -H "Content-type: application/json" --data
-      "{\"chat_id\": \"-1001860249898\", \"message\":\"Вышла новая версия бэкенда сосисочной - $VERSION. Скачать backend можно по ссылке — ${NEXUS_BACKEND_REPO_URL}/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar\"}"
-      "https://api.telegram.org/bot5595649065:AAHFJIBbd4a3c1a0cb3a98bjydfgbM1usj3g/sendMessage"'
+      "{\"chat_id\": \"-1001860249898\", \"text\": \"Вышла новая версия бэкенда сосисочной - $VERSION. Скачать backend можно по ссылке — ${NEXUS_BACKEND_REPO_URL}/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar\"}"
+      https://api.telegram.org/bot5595649065:AAHFJIBbd4a3c1a0cb3a98bjydfgbM1usj3g/sendMessage'
   
