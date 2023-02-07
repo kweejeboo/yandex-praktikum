@@ -6,8 +6,11 @@ build-frontend-code-job:
     - npm install
     - npm run build
   cache:
-    key: "${CI_COMMIT_REF_SLUG}-frontend-build"
     paths:
+    - .npm/ # для хранения зависимостей сборки фронтенда
+  artifacts:
+    name: "$CI_JOB_NAME"
+      paths:
       - frontend/dist/frontend
 
 sonar-scanner:
