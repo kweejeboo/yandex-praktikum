@@ -3,20 +3,19 @@ build-frontend-code-job:
   
   script:
     - cd frontend
-    - mkdir dist
     - npm install
     - npm run build
   cache:
-    key: frontend-build
+    key: "${CI_COMMIT_REF_SLUG}-frontend-build"
     paths:
-      - ${CI_PROJECT_DIR}/frontend/dist/
+      - frontend/dist/frontend
 
 sonar-scanner:
   stage: test
   needs:
     - build-frontend-code-job
   cache:
-    key: frontend-build
+    key: "${CI_COMMIT_REF_SLUG}-frontend-build"
   image:
     name: sonarsource/sonar-scanner-cli:latest
   script:
@@ -31,7 +30,7 @@ sonar-scanner:
 upload-frontend-release:
   stage: release
   cache:
-    key: frontend-build
+    key: "${CI_COMMIT_REF_SLUG}-frontend-build"
   needs:
     - build-frontend-code-job
   script:
