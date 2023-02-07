@@ -9,12 +9,12 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <distributionManagement>
-  <repository>
+     <repository>
        <id>sausage-store</id>
        <name>sausage-store</name>
-       <url>${env.NEXUS_REPO_URL}/sausage-store-savin-aleksandr-backend/</url>
-   </repository>
-</distributionManagement>
+       <url>${env.NEXUS_BACKEND_REPO_URL}</url>
+     </repository>
+    </distributionManagement>
     <groupId>com.yandex.practicum.devops</groupId>
     <artifactId>sausage-store</artifactId>
     <version>0.0.1-SNAPSHOT</version>
