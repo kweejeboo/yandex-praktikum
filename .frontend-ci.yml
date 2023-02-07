@@ -29,7 +29,8 @@ sonar-scanner:
       
 upload-frontend-release:
   stage: release
-  
+  cache:
+    key: frontend-build
   needs:
     - build-frontend-code-job
   script:
