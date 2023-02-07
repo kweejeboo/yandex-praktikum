@@ -17,6 +17,9 @@ build-backend-code-job:
 
 spotbugs-sast:
   stage: test
+  only:
+    changes:
+      - backend/*
   needs:
     - build-backend-code-job
   variables:
@@ -57,8 +60,13 @@ upload-backend-release:
     - cd backend
     - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -s settings.xml -Dversion.application=${VERSION} -DskipTests deploy 
             
-telegram-notification-backend:
-  stage: notify
+telegram-notification-backend:  
+stage: notify
+only:
+    changes:
+      - backend/*  
+needs:
+    - build-backend-code-job
   script:
     - 'curl -X POST -H "Content-type: application/json" --data
       "{\"chat_id\": \"-1001860249898\", \"text\": \"Вышла новая версия бэкенда сосисочной - $VERSION. Скачать backend можно по ссылке — ${NEXUS_BACKEND_REPO_URL}/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar\"}"
