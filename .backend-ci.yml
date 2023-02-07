@@ -55,6 +55,6 @@ pachca-notification-backend:
   stage: notify
   script:
     - 'curl -X POST -H "Content-type: application/json" --data
-      "{\"message\":\"Всё ещё что-то собираем. Ссылка на артефакт: https://gitlab.praktikum-services.ru/api/v4/projects/$CI_PROJECT_ID/jobs/artifacts/$CI_DEFAULT_BRANCH/download?job=build-backend-code-job\"}"
-      "https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1"'
+      "{\"chat_id\": \"-1001860249898\", \"message\":\"Вышла новая версия бэкенда сосисочной - $VERSION. Скачать backend можно по ссылке — ${NEXUS_BACKEND_REPO_URL}/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar\"}"
+      "https://api.telegram.org/bot5595649065:AAHFJIBbd4a3c1a0cb3a98bjydfgbM1usj3g/sendMessage"'
   
