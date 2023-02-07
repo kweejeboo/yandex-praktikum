@@ -3,12 +3,13 @@ build-frontend-code-job:
   
   script:
     - cd frontend
+    - mkdir dist
     - npm install
     - npm run build
   cache:
     key: frontend-build
     paths:
-      - frontend/dist/frontend
+      - ${CI_PROJECT_DIR}/frontend/dist/
 
 sonar-scanner:
   stage: test
