@@ -44,7 +44,10 @@ sonarqube-backend-sast:
 
 upload-backend-release:
   stage: release
-  
+  only:
+    changes:
+      - backend/*  
+
   needs:
     - build-backend-code-job
   script:
