@@ -4,8 +4,7 @@ build-backend-code-job:
   script:
     - cd backend
     - mvn package "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository"
-    - mvn package "-Dversion.application=${VERSION}"
-    
+        
     
   cache:
     paths:
@@ -21,13 +20,9 @@ spotbugs-sast:
     SAST_JAVA_VERSION: 16
     MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository # не забудьте при сборке также указывать эту папку через аргумент -Dmaven.repo.local
   artifacts:
-    name: sast
-    paths:
-      - gl-sast-report.json
     reports:
       sast: gl-sast-report.json
-    when: always
-
+    
 
 sonarqube-backend-sast:
   stage: test
