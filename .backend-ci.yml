@@ -1,20 +1,21 @@
 build-backend-code-job:
   stage: build
-  
   script:
     - cd backend
     - mvn package "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository"
-        
-    
   cache:
     paths:
       - backend/target/sausage-store-${VERSION}.jar
       - ${CI_PROJECT_DIR}/.m2 # сохранение зависимостей для SAST 
 
+
 spotbugs-sast:
   stage: test
   needs:
     - build-backend-code-job
+  cache:
+    paths:
+        - ${CI_PROJECT_DIR}/.m2 
   variables:
     COMPILE: "false"
     SAST_JAVA_VERSION: 16
@@ -26,7 +27,6 @@ spotbugs-sast:
 
 sonarqube-backend-sast:
   stage: test
-  
   needs:
     - build-backend-code-job
   image: maven:3.8-openjdk-16 # тот самый docker-образ, о котором мы все узнаем в будущем
@@ -42,13 +42,13 @@ sonarqube-backend-sast:
 
 upload-backend-release:
   stage: release
-  
   needs:
     - spotbugs-sast
   script:
     - cd backend
     - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -s settings.xml -Dversion.application=${VERSION} -DskipTests deploy 
-            
+
+
 telegram-notification-backend:  
   stage: notify
   needs:
