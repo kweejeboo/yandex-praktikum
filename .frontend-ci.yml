@@ -17,8 +17,6 @@ sonar-scanner:
   stage: test
   needs:
     - build-frontend-code-job
-  cache:
-    key: "${CI_COMMIT_REF_SLUG}-frontend-build"
   image:
     name: sonarsource/sonar-scanner-cli:latest
   script:
