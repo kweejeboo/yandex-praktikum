@@ -2,8 +2,11 @@ include:
 - local: "/.backend-ci.yml"
 - local: "/.frontend-ci.yml"
 - template: Security/SAST.gitlab-ci.yml
+variables:
+  VERSION: 1.0.${CI_PIPELINE_ID}
 stages:
 - build
 - test
+- release
 - notify
 

@@ -1,18 +1,21 @@
 build-backend-code-job:
   stage: build
-     
   script:
     - cd backend
     - mvn package "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository"
-    
-  artifacts:
+  cache:
     paths:
-      - backend/target/sausage-store-0.0.1-SNAPSHOT.jar
-      - ${CI_PROJECT_DIR}/.m2/ # сохранение зависимостей для SAST 
+      - backend/target/sausage-store-${VERSION}.jar
+      - ${CI_PROJECT_DIR}/.m2 # сохранение зависимостей для SAST 
+
+
 spotbugs-sast:
   stage: test
   needs:
     - build-backend-code-job
+  cache:
+    paths:
+        - ${CI_PROJECT_DIR}/.m2 
   variables:
     COMPILE: "false"
     SAST_JAVA_VERSION: 16
@@ -20,6 +23,7 @@ spotbugs-sast:
   artifacts:
     reports:
       sast: gl-sast-report.json
+    
 
 sonarqube-backend-sast:
   stage: test
@@ -35,13 +39,20 @@ sonarqube-backend-sast:
       -Dsonar.login=${SONAR_LOGIN_BACKEND}
       -Dsonar.projectName=${SONAR_PROJECT_BACKEND_NAME}
       
-            
-pachca-notification-backend:
-  stage: notify
-  script:
-    - 'curl -X POST -H "Content-type: application/json" --data
-      "{\"message\":\"Всё ещё что-то собираем. Ссылка на артефакт: https://gitlab.praktikum-services.ru/api/v4/projects/$CI_PROJECT_ID/jobs/artifacts/$CI_DEFAULT_BRANCH/download?job=build-backend-code-job\"}"
-      "https://api.pachca.com/webhooks/01GHKAEEBHC027DJAH7CHPTVF1"'
-  needs:
-    - sonarqube-backend-sast
 
+upload-backend-release:
+  stage: release
+  needs:
+    - spotbugs-sast
+  script:
+    - cd backend
+    - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -s settings.xml -Dversion.application=${VERSION} -DskipTests deploy 
+
+
+telegram-notification-backend:  
+  stage: notify
+  needs:
+    - upload-backend-release
+  script:
+    - 'curl -X POST -H "Content-type: application/json" --data "{\"chat_id\": \"-1001860249898\", \"text\": \"Вышла новая версия бэкенда сосисочной - $VERSION. Скачать бэкенд можно по ссылке — ${NEXUS_BACKEND_REPO_URL}/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar\"}" https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage'
+  
