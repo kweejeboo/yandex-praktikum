@@ -8,7 +8,6 @@ frontend:
     changes: # как только происходит изменение в папке frontend, запускается дочерний пайплайн, который лежит в этой папке
       - frontend/**/*
 
-
 build-frontend-code-job:
   stage: build
   needs:
@@ -25,8 +24,6 @@ build-frontend-code-job:
     paths:
       - frontend/dist/frontend
   
-
-
 sonar-scanner:
   stage: test
   needs:
