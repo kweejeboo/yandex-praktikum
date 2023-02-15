@@ -6,7 +6,11 @@ build-backend-code-job:
   cache:
     paths:
       - backend/target/sausage-store-${VERSION}.jar
-      - ${CI_PROJECT_DIR}/.m2 # сохранение зависимостей для SAST 
+      - ${CI_PROJECT_DIR}/.m2 # сохранение зависимостей для SAST
+  only:
+     changes:
+     - backend/*
+ 
 
 spotbugs-sast:
   stage: test
