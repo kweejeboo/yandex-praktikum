@@ -1,7 +1,5 @@
 build-backend-code-job:
   stage: build
-  needs:
-    - backend
   script:
     - cd backend
     - mvn package "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository"
@@ -14,8 +12,6 @@ build-backend-code-job:
 
 spotbugs-sast:
   stage: test
-  needs:
-    - build-backend-code-job
   cache:
     paths:
         - ${CI_PROJECT_DIR}/.m2 
@@ -30,8 +26,6 @@ spotbugs-sast:
 
 sonarqube-backend-sast:
   stage: test
-  needs:
-    - build-backend-code-job
   image: maven:3.8-openjdk-16 # тот самый docker-образ, о котором мы все узнаем в будущем
   script:
     - cd backend
