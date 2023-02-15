@@ -10,8 +10,6 @@ backend:
 
 build-backend-code-job:
   stage: build
-  needs:
-    - backend
   script:
     - cd backend
     - mvn package "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository"
@@ -19,7 +17,9 @@ build-backend-code-job:
     paths:
       - backend/target/sausage-store-${VERSION}.jar
       - ${CI_PROJECT_DIR}/.m2 # сохранение зависимостей для SAST 
-  
+  only:
+     changes:
+     - backend/*
 
 spotbugs-sast:
   stage: test
