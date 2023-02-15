@@ -17,8 +17,6 @@ build-frontend-code-job:
      
 sonar-scanner:
   stage: test
-  needs:
-    - build-frontend-code-job
   image:
     name: sonarsource/sonar-scanner-cli:latest
   script:
@@ -32,9 +30,6 @@ sonar-scanner:
 
 upload-frontend-release:
   stage: release
-  needs:
-    - build-frontend-code-job
-    - sonar-scanner
   script:
     - cd frontend/dist
     - tar czvf sausage-store-${VERSION}.tar.gz frontend
