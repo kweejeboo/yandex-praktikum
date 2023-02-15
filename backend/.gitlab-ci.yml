@@ -14,7 +14,7 @@ build-backend-code-job:
 spotbugs-sast:
   stage: test
   dependencies:
-    - build
+    - build-backend-code-job
   cache:
     paths:
         - ${CI_PROJECT_DIR}/.m2 
