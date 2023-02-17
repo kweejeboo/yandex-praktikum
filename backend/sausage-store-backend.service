@@ -3,6 +3,7 @@ Description=Sausage-store
 
 [Service]
 User=jarservice
+WorkingDirectory=/home/jarservice
 Environment=REPORT_PATH=/logs/reports
 Environment=LOG_PATH=/logs
 StandardOutput=file:/logs/out.log
