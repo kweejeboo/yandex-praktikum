@@ -3,9 +3,9 @@ Description=Sausage-store
 
 [Service]
 User=jarservice
-Environment=REPORT_PATH=/log/reports
-Environment=LOG_PATH=/log
-StandardOutput=file:/log/out.log
+WorkingDirectory=/var/jarservice
+EnvironmentFile=/etc/default/backendenv
+StandardOutput=append:/log/out.log
 Restart=always
 ExecStart=/usr/bin/java \
 -Dmyserver.basePath='/home/jarservice/' \
