@@ -1,3 +1,17 @@
+cache:
+  paths:
+    - frontend/dist/frontend
+
+variables:
+  VERSION: 1.0.${CI_PIPELINE_ID}
+
+stages:
+   - build
+   - test
+   - release
+   - notify
+
+
 build-frontend-code-job:
   stage: build
   script:
