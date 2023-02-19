@@ -5,10 +5,10 @@ set -xe
 sudo cp -rf sausage-store-frontend.service /etc/systemd/system/sausage-store-frontend.service
 #sudo rm -f /home/jarservice/sausage-store-frontend.tar.gz||true
 #Переносим артефакт в нужную папку
-curl -u ${NEXUS_REPO_USER}:${NEXUS_REPO_PASS} -o sausage-store-frontend.tar.gz ${NEXUS_FRONTEND_REPO_URL}/${VERSION}/sausage-store-${VERSION}.tar.gz
-sudo cp ./sausage-store-frontend.tar.gz /home/jarservice/sausage-store-frontend.tar.gz||true #"<...>||true" говорит, если команда обвалится — продолжай
+curl -u ${NEXUS_REPO_USER}:${NEXUS_REPO_PASS} -o sausage-store-frontend.tar ${NEXUS_FRONTEND_REPO_URL}/${VERSION}/sausage-store-${VERSION}.tar.gz
+sudo cp ./sausage-store-frontend.tar /home/jarservice/sausage-store-frontend.tar||true #"<...>||true" говорит, если команда обвалится — продолжай
 #Распакуем архив в нужную папку
-tar -xf /home/jarservice/sausage-store-frontend.tar.gz -C /var/www-data/dist/frontend
+tar -xvf /home/jarservice/sausage-store-frontend.tar -C /var/www-data/dist/frontend
 #Обновляем конфиг systemd с помощью рестарта
 sudo systemctl daemon-reload
 #Перезапускаем сервис сосисочной
