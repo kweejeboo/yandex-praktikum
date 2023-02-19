@@ -3,7 +3,7 @@
 set -xe
 #Перезаливаем дескриптор сервиса на ВМ для деплоя
 sudo cp -rf sausage-store-frontend.service /etc/systemd/system/sausage-store-frontend.service
-#sudo rm -f /home/jarservice/sausage-store-frontend.tar.gz||true
+sudo rm -dfr /home/jarservice/frontend/||true
 #Переносим артефакт в нужную папку
 curl -u ${NEXUS_REPO_USER}:${NEXUS_REPO_PASS} -o sausage-store-frontend.tar.gz ${NEXUS_FRONTEND_REPO_URL}/${VERSION}/sausage-store-${VERSION}.tar.gz
 sudo cp ./sausage-store-frontend.tar.gz /home/jarservice/sausage-store-frontend.tar.gz||true #"<...>||true" говорит, если команда обвалится — продолжай
