@@ -70,6 +70,8 @@ upload-backend-release:
            
 telegram-notification-backend:  
   stage: notify
+  needs:
+    - upload-backend-release
   script:
     - 'curl -X POST -H "Content-type: application/json" --data "{\"chat_id\": \"-1001860249898\", \"text\": \"Вышла новая версия бэкенда сосисочной - $VERSION. Скачать бэкенд можно по ссылке — ${NEXUS_BACKEND_REPO_URL}/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar\"}" https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage'
 
