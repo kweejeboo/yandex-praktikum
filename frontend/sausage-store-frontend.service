@@ -3,6 +3,7 @@ Description=sausage-store frontend autostart
 
 [Service]
 User=front-user
+AmbientCapabilities=CAP_NET_BIND_SERVICE
 WorkingDirectory=/var/www-data/
 ExecStart=/usr/bin/http-server /var/www-data/dist/frontend/ -p 80 --proxy http://localhost:8080
 Restart=on-failure
