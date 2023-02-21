@@ -5,8 +5,8 @@ Description=Sausage-store
 User=jarservice
 WorkingDirectory=/home/jarservice
 Environment=REPORT_PATH=/logs/reports
-Environment=LOG_PATH=/logs
-StandardOutput=file:/logs/out.log
+Environment=LOG_PATH=/opt/log
+StandardOutput=file:/opt/log/sausage-store-backend.log
 Restart=always
 ExecStart=/usr/bin/java \
 -Dmyserver.basePath='/home/jarservice/' \
