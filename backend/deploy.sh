@@ -7,12 +7,7 @@ sudo rm -f /home/jarservice/sausage-store.jar||true
 #Переносим артефакт в нужную папку
 curl -u ${NEXUS_REPO_USER}:${NEXUS_REPO_PASS} -o 'sausage-store.jar' "$NEXUS_BACKEND_REPO_URL/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar"
 sudo cp ./sausage-store.jar /home/jarservice/sausage-store.jar||true #"<...>||true" говорит, если команда обвалится — продолжай#Обновляем конфиг systemd с помощью рестарта
-#Пробрасываем переменные
-export PSQL_HOST=${PSQL_HOST}
-export PSQL_PORT=${PSQL_PORT}
-export PSQL_DBNAME=${PSQL_DBNAME}
-export PSQL_USER=${PSQL_USER}
-export PSQL_PASSWORD=${PSQL_PASSWORD}
+
 #Применяем изменения unit-файла
 sudo systemctl daemon-reload
 #Перезапускаем сервис сосисочной
