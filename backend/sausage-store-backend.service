@@ -14,9 +14,9 @@ ExecStart=/usr/bin/java \
 -Dmyserver.bindPort='8080' \
 -Dmyserver.hostName='Sausage-store' \
 -jar '/home/jarservice/sausage-store.jar' 
---spring.datasource.url=jdbc:postgresql://rc1b-txenjeot0qbcbnh3.mdb.yandexcloud.net:6432/std-013-60
---spring.datasource.username=std-013-60 
---spring.datasource.password=Testusr1234 
+--spring.datasource.url=jdbc:postgresql://${PSQL_HOST}:${PSQL_PORT}/${PSQL_DBNAME} 
+--spring.datasource.username=${PSQL_USER} 
+--spring.datasource.password=${PSQL_PASSWORD} 
 SuccessExitStatus=143
 
 [Install]
