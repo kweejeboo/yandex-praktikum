@@ -8,11 +8,10 @@ Environment=REPORT_PATH=/logs/reports
 Environment=LOG_PATH=/logs
 StandardOutput=file:/logs/out.log
 Restart=always
-ExecStart=/usr/bin/java \
--jar '/home/jarservice/sausage-store.jar' \
+ExecStart=/usr/bin/java -jar '/home/jarservice/sausage-store.jar' \
 --spring.datasource.url=jdbc:postgresql://${PSQL_HOST}:${PSQL_PORT}/${PSQL_DBNAME} \
 --spring.datasource.username=${PSQL_USER} \ 
---spring.datasource.password=${PSQL_PASSWORD} \
+--spring.datasource.password=${PSQL_PASSWORD}
 SuccessExitStatus=143
 
 [Install]
