@@ -1,2 +1,3 @@
-ALTER TABLE product ALTER COLUMN "name" TYPE varchar(20);
-ALTER TABLE product ALTER COLUMN "picture_url" TYPE varchar(100);
+ALTER TABLE product
+ALTER COLUMN name MODIFY varchar(20),
+ALTER COLUMN picture_url MODIFY varchar(100);
