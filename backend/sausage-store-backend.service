@@ -8,9 +8,9 @@ StandardError=file:/logs/out-back-error.log
 StandardOutput=file:/logs/out.log
 Restart=always
 ExecStart=/usr/bin/java -jar '/home/jarservice/sausage-store.jar' \
---spring.datasource.url=jdbc:postgresql://$PSQL_HOST:$PSQL_PORT/$PSQL_DBNAME \
---spring.datasource.username=$PSQL_USER \
---spring.datasource.password=$PSQL_PASSWORD 
+--spring.datasource.url=jdbc:postgresql://@env.PSQL_HOST@:@env.PSQL_PORT@/@env.PSQL_DBNAME@ \
+--spring.datasource.username=@env.PSQL_USER@ \
+--spring.datasource.password=@env.PSQL_PASSWORD@
 SuccessExitStatus=143
 
 [Install]
