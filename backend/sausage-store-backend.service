@@ -3,6 +3,7 @@ Description=Sausage-store
 
 [Service]
 User=jarservice
+EnvironmentFile=/etc/default/mongo
 WorkingDirectory=/home/jarservice
 StandardError=file:/logs/out-back-error.log
 StandardOutput=file:/logs/out.log
@@ -12,10 +13,8 @@ ExecStart=/usr/bin/java \
 -Dmyserver.bindAddr='127.0.0.1' \
 -Dmyserver.bindPort='8080' \
 -Dmyserver.hostName='Sausage-store' \
--jar '/home/jarservice/sausage-store.jar' 
+-jar '/home/jarservice/sausage-store.jar' --spring.data.mongodb.uri=mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}?tls=true 
 
- 
-SuccessExitStatus=143
 
 SuccessExitStatus=143
 
