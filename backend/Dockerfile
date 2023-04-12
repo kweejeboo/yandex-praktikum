@@ -8,7 +8,6 @@ ARG VERSION=${VERSION}
 WORKDIR /usr/src/app
 COPY ./src ./src
 COPY *.xml ./
-COPY /home/student/sausage-store-1.0.547004.jar ./
 # копируем CA-сертификат Яндекса в образ
 RUN curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRootCA.crt \
     && mvn package -Dversion.application=${VERSION}
