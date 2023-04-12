@@ -4,17 +4,17 @@
 # build
 FROM maven:3.8.2-openjdk-16-slim as builder
 # задаём переменную VERSION, которая будет использоваться для сборки проекта
-ARG VERSION=${VERSION}
+ARG VERSION=1.0.547697
 WORKDIR /usr/src/app
 COPY ./src ./src
 COPY *.xml ./
 # копируем CA-сертификат Яндекса в образ
 RUN curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRootCA.crt \
-    && mvn package -Dversion.application=${VERSION}
+    && mvn package -Dversion.application=1.0.547697
 
 # release
 FROM openjdk:16-jdk-alpine
-ARG VERSION=${VERSION}
+ARG VERSION=1.0.547697
 WORKDIR /app
 COPY --from=builder /usr/src/app/YandexInternalRootCA.crt .
 # подкидываем CA-сертификат Яндекса в хранилище сертификатов для Java
