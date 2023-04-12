@@ -11,8 +11,7 @@ COPY *.xml ./
 RUN echo $VERSION
 # копируем CA-сертификат Яндекса в образ
 RUN curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRootCA.crt \
-    && mvn package 
-#-Dversion.application=
+    && mvn package -Dversion.application=1
 
 # release
 FROM openjdk:16-jdk-alpine
