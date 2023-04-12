@@ -8,7 +8,7 @@ ARG IMAGE_VERSION=1.0.${CI_PIPELINE_ID}
 WORKDIR /usr/src/app
 COPY ./src ./src
 COPY *.xml ./
-echo $IMAGE_VERSION
+RUN echo $IMAGE_VERSION
 # копируем CA-сертификат Яндекса в образ
 RUN curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRootCA.crt \
     && mvn package -Dversion.application=${IMAGE_VERSION}
