@@ -4,17 +4,17 @@
 # build
 FROM maven:3.8.2-openjdk-16-slim as builder
 # задаём переменную VERSION, которая будет использоваться для сборки проекта
-ARG VERSION=1.0.547697
+# ARG VERSION=1.0.547697
 WORKDIR /usr/src/app
 COPY ./src ./src
 COPY *.xml ./
 # копируем CA-сертификат Яндекса в образ
 RUN curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRootCA.crt \
-    && mvn package -Dversion.application=1.0.547697
+    && mvn package -Dversion.application=${VERSION}
 
 # release
 FROM openjdk:16-jdk-alpine
-ARG VERSION=1.0.547697
+#ARG VERSION=1.0.547697
 WORKDIR /app
 COPY --from=builder /usr/src/app/YandexInternalRootCA.crt .
 # подкидываем CA-сертификат Яндекса в хранилище сертификатов для Java
@@ -26,7 +26,7 @@ RUN keytool -importcert -file YandexInternalRootCA.crt \
     && adduser -S -s /bin/false -G jaruser jaruser -D -H \
     && apk add --no-cache dumb-init==1.2.5-r0
 COPY --chown=jaruser:jaruser \
-     --from=builder /usr/src/app/target/sausage-store-1.0.null.jar ./sausage-store.jar
+     --from=builder /usr/src/app/target/sausage-store-1.0.${VERSION}.jar ./sausage-store.jar
 EXPOSE 8080
 # приложение будет запускаться под пользователем jaruser
 USER jaruser
