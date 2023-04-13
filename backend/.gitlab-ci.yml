@@ -64,6 +64,8 @@ upload-backend-release:
     - docker tag $CI_REGISTRY_IMAGE/sausage-backend:$CI_COMMIT_SHA
       $CI_REGISTRY_IMAGE/sausage-backend:latest
     - docker push $CI_REGISTRY_IMAGE/sausage-backend:latest
+  needs:
+    - sonarqube-backend-sast
 telegram-notification-backend:
   stage: notify
   needs:
