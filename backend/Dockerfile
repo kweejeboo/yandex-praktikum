@@ -12,7 +12,7 @@ COPY *.xml ./
 #RUN echo $VERSION
 # копируем CA-сертификат Яндекса в образ
 RUN curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRootCA.crt \
-    && mvn package -Dversion.application=1.0.547697
+    && mvn package -Drevision=1.0.${CI_COMMIT_ID}
 # release
 FROM openjdk:16-jdk-alpine
 #ARG VERSION=1.0.547697
