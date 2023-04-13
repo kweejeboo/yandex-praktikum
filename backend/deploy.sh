@@ -11,7 +11,11 @@ MONGO_DATABASE=${MONGO_DATABASE}
 MONGO_PORT=${MONGO_PORT}
 MONGO_USER=${MONGO_USER}
 MONGO_PASSWORD=${MONGO_PASSWORD}
+VERSION=${VERSION}
 EOF
+
+curl -u ${NEXUS_REPO_USER}:${NEXUS_REPO_PASS} "$NEXUS_BACKEND_REPO_URL/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar"
+
 docker network create -d bridge sausage_network || true
 docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
 docker stop backend || true
