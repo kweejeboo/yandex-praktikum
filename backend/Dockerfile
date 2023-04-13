@@ -6,13 +6,11 @@ FROM maven:3.8.2-openjdk-16-slim as builder
 # задаём переменную VERSION, которая будет использоваться для сборки проекта
 #ARG VERSION=1.0.547697
 WORKDIR /usr/src/app
-#ARG IMG_VER=1.0.6
 COPY ./src ./src
 COPY *.xml ./
-#RUN echo $VERSION
 # копируем CA-сертификат Яндекса в образ
 RUN curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRootCA.crt \
-    && mvn package -Drevision=1.0.$CI_COMMIT_ID
+    && mvn package -Drevision=1.0.547697
 # release
 FROM openjdk:16-jdk-alpine
 #ARG VERSION=1.0.547697
