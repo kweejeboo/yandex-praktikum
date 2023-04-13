@@ -17,7 +17,7 @@
     </distributionManagement>
     <groupId>com.yandex.practicum.devops</groupId>
     <artifactId>sausage-store</artifactId>
-    <version>1.0.${env.CI_PIPELINE_ID}</version>
+
     <name>sausage-store</name>
         <description>Backend for sausage-store</description>
     <properties>
