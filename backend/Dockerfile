@@ -6,19 +6,12 @@ FROM maven:3.8.2-openjdk-16-slim as builder
 # задаём переменную VERSION, которая будет использоваться для сборки проекта
 #ARG VERSION=1.0.547697
 WORKDIR /usr/src/app
-COPY sausage-store.jar /usr/src/app/target/sausage-store-0.0.1.jar
 COPY ./src ./src
 COPY *.xml ./
 RUN echo $VERSION
 # копируем CA-сертификат Яндекса в образ
-<<<<<<< HEAD
-RUN curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRootCA.crt
-RUN  mvn package -Dversion.application=${VERSION}
-=======
 RUN curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRootCA.crt \
     && mvn package -Dversion.application=1
->>>>>>> 0dee3f26b7eb7b53b383f5d466c02a65e0cdfe73
-
 # release
 FROM openjdk:16-jdk-alpine
 #ARG VERSION=1.0.547697
