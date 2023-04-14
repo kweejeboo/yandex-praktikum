@@ -11,10 +11,14 @@ MONGO_DATABASE=${MONGO_DATABASE}
 MONGO_PORT=${MONGO_PORT}
 MONGO_USER=${MONGO_USER}
 MONGO_PASSWORD=${MONGO_PASSWORD}
+GITLAB_REGISTRY=${GITLAB_REGISTRY}
+GITLAB_USER=${GITLAB_USER}
+GITLAB_PASS=${GITLAB_PASS}
 VERSION=${VERSION}
 EOF
 
 docker network create -d bridge sausage_network || true
+docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
 docker stop backend || true
 docker rm backend || true
