@@ -20,11 +20,11 @@ build-frontend-code-job:
   services:
     - docker:dind
   before_script:
+    - until docker info; do sleep 1; done
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-# echo "$DOCKERHUB_TOKEN" | docker login --username $DOCKERHUB_LOGIN --password-stdin
+    - echo "$DOCKERHUB_TOKEN" | docker login --username $DOCKERHUB_LOGIN --password-stdin
   script:
     - cd frontend
-    - docker --version
     - docker build --build-arg VERSION=$VERSION --tag $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA . 
     - docker push $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA
 
