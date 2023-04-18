@@ -23,8 +23,8 @@ docker rm frontend || true
 set -e
 docker run -d --name sausage-frontend \
     --network=sausage_network \
-    -p 8080:80
     --restart always \
     --pull always \
+    -p 8080:80 \ 
     ${GITLAB_REGISTRY}/sausage-store/sausage-frontend:latest
 
