@@ -97,5 +97,5 @@ deploy:
       export "GITLAB_REGISTRY=${GITLAB_REGISTRY}";
       export "GITLAB_USER=${GITLAB_USER}";
       export "GITLAB_PASS=${GITLAB_PASS}";
-      /bin/bash -s " < ./backend/deploy.sh
+      /bin/bash -s " < ./frontend/deploy.sh
                                                    
