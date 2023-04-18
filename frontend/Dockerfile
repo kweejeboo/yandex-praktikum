@@ -15,7 +15,7 @@ RUN adduser -S -s /bin/false -G www-data www-data -D -H
 COPY --chown=www-data:www-data --from=builder /usr/src/app/dist ./dist
 COPY package*.json .
 RUN npm install -g http-server
-USER ww-data
+USER www-data
 EXPOSE 80
 
 
