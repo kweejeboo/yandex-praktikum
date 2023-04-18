@@ -45,8 +45,10 @@ sonar-scanner:
 
 upload-frontend-release:
   variables:
-    GIT_STRATEGY: none
-  image: docker:20.10.24-dind-rootless
+#    GIT_STRATEGY: none
+  image: docker:20.10.12-dind-rootless
+  services:
+    - docker:dind
   stage: release
   before_script:
     - until docker info; do sleep 1; done
