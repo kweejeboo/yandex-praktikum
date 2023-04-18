@@ -4,6 +4,7 @@ cache:
 
 variables:
   VERSION: 1.0.${CI_PIPELINE_ID}
+  
 
 
 stages:
@@ -15,10 +16,12 @@ stages:
 
 
 build-frontend-code-job:
-  stage: build
-  image: docker:23.0.3-dind
+  image: docker
   services:
     - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+  stage: build
   before_script:
     - until docker info; do sleep 1; done
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
