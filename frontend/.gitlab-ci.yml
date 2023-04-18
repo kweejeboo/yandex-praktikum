@@ -15,7 +15,7 @@ stages:
 
 build-frontend-code-job:
   stage: build
-  image: docker:20.10-dind-rootless
+  image: docker:20.10.24-dind-rootless
   before_script:
     - until docker info; do sleep 1; done
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
@@ -44,7 +44,7 @@ sonar-scanner:
 upload-frontend-release:
   variables:
     GIT_STRATEGY: none
-  image: docker:20.10-dind-rootless
+  image: docker:20.10.24-dind-rootless
   stage: release
   before_script:
     - until docker info; do sleep 1; done
