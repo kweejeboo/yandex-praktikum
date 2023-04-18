@@ -18,13 +18,13 @@ set -xe
 docker network create -d bridge sausage_network || true
 docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY
 docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-frontend:latest
-docker stop backend || true
-docker rm backend || true
+docker stop frontend  || true
+docker rm frontend || true
 set -e
-docker run -d --name backend \
+docker run -d --name sausage-frontend \
     --network=sausage_network \
     -p 8080:80
     --restart always \
     --pull always \
-    ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
+    ${GITLAB_REGISTRY}/sausage-store/sausage-frontend:latest
 
