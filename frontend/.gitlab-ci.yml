@@ -21,7 +21,8 @@ build-frontend-code-job:
     - docker:dind
   stage: build
   before_script:
-    - until docker info; do sleep 1; done
+    - docker --version
+    - until docker info; do sleep 2; done
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - echo "$DOCKERHUB_TOKEN" | docker login --username $DOCKERHUB_LOGIN --password-stdin
   script:
@@ -45,7 +46,7 @@ sonar-scanner:
 
 upload-frontend-release:
   variables:
-#    GIT_STRATEGY: none
+    GIT_STRATEGY: none
   image: docker:20.10.12-dind-rootless
   services:
     - docker:dind
@@ -65,6 +66,8 @@ telegram-notification-frontend:
   needs:
     - upload-frontend-release
   script:
+    - apk add --update curl
+    - curl --version
     - 'curl -X POST -H "Content-type: application/json" --data "{\"chat_id\": \"-1001860249898\", \"text\": \"Вышла новая версия фронтенда сосисочной - $VERSION. Скачать фронтенд можно по ссылке — ${NEXUS_FRONTEND_REPO_URL}/${VERSION}/sausage-store-${VERSION}.tar.gz\"}" https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage'
 
 deploy:
@@ -94,5 +97,5 @@ deploy:
       export "GITLAB_REGISTRY=${GITLAB_REGISTRY}";
       export "GITLAB_USER=${GITLAB_USER}";
       export "GITLAB_PASS=${GITLAB_PASS}";
-      /bin/bash -s " < ./backend/deploy.sh
+      /bin/bash -s " < ./frontend/deploy.sh
                                                    
