@@ -16,7 +16,7 @@ stages:
 
 build-frontend-code-job:
   stage: build
-  image: docker:docker:stable-dind
+  image: docker:stable-dind
   services:
     - docker:dind
   before_script:
