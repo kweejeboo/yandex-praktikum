@@ -25,7 +25,6 @@ build-frontend-code-job:
   script:
     - cd frontend
     - docker --version
-    - service docker status
     - docker build --build-arg VERSION=$VERSION --tag $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA . 
     - docker push $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA
 
