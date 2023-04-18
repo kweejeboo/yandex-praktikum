@@ -21,8 +21,7 @@ build-frontend-code-job:
     - docker:dind
   stage: build
   before_script:
-    - apk add nmap
-    - nmap -sT -p- docker
+    - docker --version
     - until docker info; do sleep 2; done
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - echo "$DOCKERHUB_TOKEN" | docker login --username $DOCKERHUB_LOGIN --password-stdin
@@ -47,7 +46,7 @@ sonar-scanner:
 
 upload-frontend-release:
   variables:
-#    GIT_STRATEGY: none
+    GIT_STRATEGY: none
   image: docker:20.10.12-dind-rootless
   services:
     - docker:dind
