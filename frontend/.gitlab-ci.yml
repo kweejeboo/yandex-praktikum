@@ -15,7 +15,7 @@ stages:
 
 build-frontend-code-job:
   stage: build
-  image: docker:20.10.12-dind-rootless
+  image: docker:dind-rootless
   services:
     - docker:dind
   before_script:
