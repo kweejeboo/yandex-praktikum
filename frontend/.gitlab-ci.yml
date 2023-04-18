@@ -22,9 +22,7 @@ build-frontend-code-job:
     - echo "$DOCKERHUB_TOKEN" | docker login --username $DOCKERHUB_LOGIN --password-stdin
   script:
     - cd frontend
-    - >
-      docker build --build-arg VERSION=$VERSION --tag
-      $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA . 
+    - docker build --build-arg VERSION=$VERSION --tag $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA . 
     - docker push $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA
 
      
