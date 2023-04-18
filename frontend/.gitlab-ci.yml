@@ -19,8 +19,6 @@ build-frontend-code-job:
   image: docker
   services:
     - docker:dind
-  variables:
-    DOCKER_HOST: tcp://docker:2375
   stage: build
   before_script:
     - until docker info; do sleep 1; done
