@@ -20,8 +20,6 @@ build-frontend-code-job:
   services:
     - docker:dind
   stage: build
-  variables:
-    DOCKER_HOST: tcp://docker:2376/
   before_script:
     - until docker info; do sleep 1; done
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
