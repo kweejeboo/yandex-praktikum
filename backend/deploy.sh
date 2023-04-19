@@ -17,6 +17,8 @@ GITLAB_PASS=${GITLAB_PASS}
 VERSION=${VERSION}
 EOF
 
+echo $PSQL_HOST
+
 docker network create -d bridge sausage_network || true
 docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY
 docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
