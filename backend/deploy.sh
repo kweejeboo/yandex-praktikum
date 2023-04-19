@@ -1,5 +1,5 @@
 #!/bin/bash
-set +e
+set -e
 cat > .env <<EOF
 PSQL_HOST=${PSQL_HOST}
 PSQL_DBNAME=${PSQL_DBNAME}
@@ -24,7 +24,6 @@ docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY
 docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
 docker stop backend || true
 docker rm backend || true
-set -e
 docker run -d --name backend \
     --network=sausage_network \
     --restart always \
