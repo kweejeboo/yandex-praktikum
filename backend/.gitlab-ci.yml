@@ -77,6 +77,7 @@ telegram-notification-backend:
   needs:
     - upload-backend-release
   script:
+    - apk add --update curl
     - 'curl -X POST -H "Content-type: application/json" --data "{\"chat_id\":
       \"-1001860249898\", \"text\": \"Вышла новая версия бэкенда сосисочной -
       $VERSION. Скачать бэкенд можно по ссылке —
