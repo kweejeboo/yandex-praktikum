@@ -1,5 +1,5 @@
 #!/bin/bash
-set +e
+set -xe
 
 echo $GITLAB_USER >> .env
 echo $PSQL_HOST >> .env
