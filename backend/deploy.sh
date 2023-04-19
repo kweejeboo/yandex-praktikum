@@ -1,9 +1,6 @@
 #!/bin/bash
 set -xe
 
-echo $GITLAB_USER >> .env
-echo $PSQL_HOST >> .env
-
 cat > .env <<EOF
 PSQL_HOST=${PSQL_HOST}
 PSQL_DBNAME=${PSQL_DBNAME}
@@ -18,10 +15,11 @@ MONGO_PASSWORD=${MONGO_PASSWORD}
 GITLAB_REGISTRY=${GITLAB_REGISTRY}
 GITLAB_USER=${GITLAB_USER}
 GITLAB_PASS=${GITLAB_PASS}
+GIT_FOLDER=${GIT_FOLDER}
 VERSION=${VERSION}
 EOF
 
-echo $PSQL_HOST
+cp .env $GIT_FOLDER/backend/
 
 docker network create -d bridge sausage_network || true
 docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY
