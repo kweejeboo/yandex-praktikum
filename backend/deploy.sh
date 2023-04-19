@@ -1,5 +1,9 @@
 #!/bin/bash
-set -e
+set +e
+
+echo $GITLAB_USER >> .env
+echo $PSQL_HOST >> .env
+
 cat > .env <<EOF
 PSQL_HOST=${PSQL_HOST}
 PSQL_DBNAME=${PSQL_DBNAME}
