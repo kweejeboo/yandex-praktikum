@@ -126,23 +126,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>8.0.5</version>
-                <configuration>
-                    <url>jdbc:postgresql://${PSQL_HOST}:${PSQL_PORT}/${PSQL_DBNAME}</url>
-                    <user>${PSQL_USER}</user>
-                    <password>${PSQL_PASSWORD}</password>
-                    <table>schema_history</table>
-                    <baselineVersion>2.0</baselineVersion>
-                    <baselineDescription>Base Migration</baselineDescription>
-                    <skip>false</skip>
-                    <locations>
-                        <location>classpath:src/main/resources/db/migration</location>
-                    </locations>
-                </configuration>           
-            </plugin>
-            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco-maven-plugin.version}</version>
