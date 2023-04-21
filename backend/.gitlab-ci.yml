@@ -106,7 +106,7 @@ deploy-backend:
       export "PSQL_HOST=${PSQL_HOST}";
       export "PSQL_DBNAME=${PSQL_DBNAME}";
       export "PSQL_PORT=${PSQL_PORT}";
-      export "PSQL_USERNAME=${PSQL_USERNAME}";
+      export "PSQL_USER=${PSQL_USER}";
       export "PSQL_PASSWORD=${PSQL_PASSWORD}";
       export "MONGO_HOST=${MONGO_HOST}";
       export "MONGO_DATABASE=${MONGO_DATABASE}";
