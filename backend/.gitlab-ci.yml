@@ -31,12 +31,17 @@ build-backend-code-job:
       docker build --build-arg VERSION=$VERSION --tag
       $CI_REGISTRY_IMAGE/sausage-backend:$CI_COMMIT_SHA . 
     - docker push $CI_REGISTRY_IMAGE/sausage-backend:$CI_COMMIT_SHA
+  artifacts:
+    paths:
+      - .m2/
+      - target/
+      
 spotbugs-sast:
   stage: test
   dependencies:
     - build-backend-code-job
   variables:
-    COMPILE: "false"
+    COMPILE: "true"
     SAST_JAVA_VERSION: 16
     MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
   artifacts:
