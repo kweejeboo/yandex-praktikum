@@ -8,11 +8,11 @@ COPY ./src ./src
 COPY *.xml ./
 # копируем CA-сертификат Яндекса в образ
 RUN curl https://storage.yandexcloud.net/cloud-certs/CA.pem -o YandexInternalRootCA.crt \
-    && mvn package -Drevision=1.0.547697
+    && mvn package -Drevision=1.0.547697 -Dmaven.repo.local=./.m2/repository
 # release
 FROM openjdk:16-jdk-alpine
 WORKDIR /app
-COPY --from=builder /usr/src/app/YandexInternalRootCA.crt .
+COPY --from=builder /usr/src/app/YandexInternalRootCA.crt . 
 # подкидываем CA-сертификат Яндекса в хранилище сертификатов для Java
 # создаём пользователя jaruser
 RUN keytool -importcert -file YandexInternalRootCA.crt \
