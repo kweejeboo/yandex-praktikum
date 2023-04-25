@@ -1,14 +1,34 @@
-#! /bin/bash
-#Если свалится одна из команд, рухнет и весь скрипт
+#!/bin/bash
 set -xe
-#Перезаливаем дескриптор сервиса на ВМ для деплоя
-sudo cp -rf sausage-store-backend.service /etc/systemd/system/sausage-store-backend.service
-sudo rm -f /home/jarservice/sausage-store.jar||true
-#Переносим артефакт в нужную папку
-curl -u ${NEXUS_REPO_USER}:${NEXUS_REPO_PASS} -o 'sausage-store.jar' "$NEXUS_BACKEND_REPO_URL/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar"
-sudo cp ./sausage-store.jar /home/jarservice/sausage-store.jar||true #"<...>||true" говорит, если команда обвалится — продолжай#Обновляем конфиг systemd с помощью рестарта
 
-#Применяем изменения unit-файла
-sudo systemctl daemon-reload
-#Перезапускаем сервис сосисочной
-sudo systemctl restart sausage-store-backend 
+cat > .env <<EOF
+PSQL_HOST=${PSQL_HOST}
+PSQL_DBNAME=${PSQL_DBNAME}
+PSQL_PORT=${PSQL_PORT}
+PSQL_USER=${PSQL_USER}
+PSQL_PASSWORD=${PSQL_PASSWORD}
+MONGO_HOST=${MONGO_HOST}
+MONGO_DATABASE=${MONGO_DATABASE}
+MONGO_PORT=${MONGO_PORT}
+MONGO_USER=${MONGO_USER}
+MONGO_PASSWORD=${MONGO_PASSWORD}
+GITLAB_REGISTRY=${GITLAB_REGISTRY}
+GITLAB_USER=${GITLAB_USER}
+GITLAB_PASS=${GITLAB_PASS}
+GIT_FOLDER=${GIT_FOLDER}
+VERSION=${VERSION}
+EOF
+
+cp .env $GIT_FOLDER/backend/
+
+docker network create -d bridge sausage_network || true
+docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY
+docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
+docker stop backend || true
+docker rm backend || true
+docker run -d --name backend \
+    --network=sausage_network \
+    --restart always \
+    --pull always \
+    --env-file .env \
+    ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest

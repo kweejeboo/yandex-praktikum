@@ -17,7 +17,7 @@
     </distributionManagement>
     <groupId>com.yandex.practicum.devops</groupId>
     <artifactId>sausage-store</artifactId>
-    <version>1.0.${env.CI_PIPELINE_ID}</version>
+    <version>${revision}</version>
     <name>sausage-store</name>
         <description>Backend for sausage-store</description>
     <properties>
@@ -124,23 +124,6 @@
                         <delimiter>@</delimiter>
                     </delimiters>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>8.0.5</version>
-                <configuration>
-                    <url>jdbc:postgresql://${env.PSQL_HOST}:${env.PSQL_PORT}/${env.PSQL_DBNAME}</url>
-                    <user>${env.PSQL_USER}</user>
-                    <password>${env.PSQL_PASSWORD}</password>
-                    <table>schema_history</table>
-                    <baselineVersion>2.0</baselineVersion>
-                    <baselineDescription>Base Migration</baselineDescription>
-                    <skip>false</skip>
-                    <locations>
-                        <location>classpath:src/main/resources/db/migration</location>
-                    </locations>
-                </configuration>           
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
