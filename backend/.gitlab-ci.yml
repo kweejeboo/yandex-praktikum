@@ -94,7 +94,7 @@ telegram-notification-backend:
 
 deploy-backend:
   stage: deploy
-  image: image: vault:1.11.3
+  image: vault:1.11.3
   before_script:
     - apk add openssh-client bash
     - eval $(ssh-agent -s)
