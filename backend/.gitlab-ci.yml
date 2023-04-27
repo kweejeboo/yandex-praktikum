@@ -19,8 +19,6 @@ stages:
 build-backend-code-job:
   stage: build
   image: docker:20.10.12-dind-rootless
-  variables:
-    SPRING_CLOUD_VAULT_ENABLED: "false"
   services:
     - docker:dind
   before_script:
@@ -45,8 +43,7 @@ spotbugs-sast:
   variables:
     COMPILE: "true"
     SAST_JAVA_VERSION: 16
-    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
-    SPRING_CLOUD_VAULT_ENABLED: "false"
+    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository    
   artifacts:
     reports:
       sast: gl-sast-report.json
@@ -55,8 +52,6 @@ spotbugs-sast:
 sonarqube-backend-sast:
   stage: test
   image: maven:3.8-openjdk-16
-  variables:
-    SPRING_CLOUD_VAULT_ENABLED: "false"
   script:
     - cd backend
     - >
@@ -69,7 +64,6 @@ sonarqube-backend-sast:
       - ${CI_PROJECT_DIR}/.m2/repository
 upload-backend-release:
   variables:
-    SPRING_CLOUD_VAULT_ENABLED: "false"
     GIT_STRATEGY: none
   image: docker:20.10.12-dind-rootless
   services:
@@ -108,7 +102,6 @@ deploy-backend:
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - alias vault='sudo docker exec -it vault vault'
   script:
     - export VAULT_TOKEN="$(vault write -field=token auth/jwt/login role=sausage-store jwt=$CI_JOB_JWT)"      
     - ssh ${DEV_USER}@${DEV_HOST}
