@@ -47,6 +47,9 @@
         <dependency>
           <groupId>org.springframework.cloud</groupId>
           <artifactId>spring-cloud-vault-config</artifactId>
+          <version>${spring-cloud.version}</version>
+          <type>pom</type>
+          <scope>import</scope>
         </dependency> 
         <dependency>
             <groupId>org.flywaydb</groupId>
