@@ -19,6 +19,8 @@ stages:
 build-backend-code-job:
   stage: build
   image: docker:20.10.12-dind-rootless
+  variables:
+    SPRING_CLOUD_VAULT_ENABLED: "false"
   services:
     - docker:dind
   before_script:
@@ -53,6 +55,8 @@ spotbugs-sast:
 sonarqube-backend-sast:
   stage: test
   image: maven:3.8-openjdk-16
+  variables:
+    SPRING_CLOUD_VAULT_ENABLED: "false"
   script:
     - cd backend
     - >
@@ -65,6 +69,7 @@ sonarqube-backend-sast:
       - ${CI_PROJECT_DIR}/.m2/repository
 upload-backend-release:
   variables:
+    SPRING_CLOUD_VAULT_ENABLED: "false"
     GIT_STRATEGY: none
   image: docker:20.10.12-dind-rootless
   services:
