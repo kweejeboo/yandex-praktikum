@@ -110,7 +110,7 @@ deploy-backend:
       export "PSQL_HOST=${PSQL_HOST}";
       export "PSQL_DBNAME=${PSQL_DBNAME}";
       export "PSQL_PORT=${PSQL_PORT}";
-      export "PSQL_USER=${PSQL_USER}";
+      export "PSQL_USER=$(vault kv get -field=spring.datasource.username secret/sausage-store)";
       export "PSQL_PASSWORD=$(vault kv get -field=spring.datasource.password secret/sausage-store)";
       export "MONGO_HOST=${MONGO_HOST}";
       export "MONGO_DATABASE=${MONGO_DATABASE}";
