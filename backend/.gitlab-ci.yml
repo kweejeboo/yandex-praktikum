@@ -43,8 +43,7 @@ spotbugs-sast:
   variables:
     COMPILE: "true"
     SAST_JAVA_VERSION: 16
-    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
-    SPRING_CLOUD_VAULT_ENABLED: "false"
+    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository    
   artifacts:
     reports:
       sast: gl-sast-report.json
@@ -85,7 +84,7 @@ telegram-notification-backend:
   needs:
     - upload-backend-release
   script:
-    - apk add --update curl
+#    - apk add --update curl
     - 'curl -X POST -H "Content-type: application/json" --data "{\"chat_id\":
       \"-1001860249898\", \"text\": \"Вышла новая версия бэкенда сосисочной -
       $VERSION. Скачать бэкенд можно по ссылке —
