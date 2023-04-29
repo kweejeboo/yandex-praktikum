@@ -25,7 +25,7 @@ docker run -d --name sausage-frontend \
     --network=sausage_network \
     --restart always \
     --pull always \
-    -p 8080:80 \
+    -p 1080:80 \
     --env-file .env \
     ${GITLAB_REGISTRY}/sausage-store/sausage-frontend:latest
 
