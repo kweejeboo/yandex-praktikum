@@ -73,16 +73,16 @@ upload-backend-report-release:
     - until docker info; do sleep 1; done
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker pull $CI_REGISTRY_IMAGE/sausage-backend:$CI_COMMIT_SHA
-    - docker tag $CI_REGISTRY_IMAGE/sausage-backend:$CI_COMMIT_SHA
-      $CI_REGISTRY_IMAGE/sausage-backend:latest
-    - docker push $CI_REGISTRY_IMAGE/sausage-backend:latest
+    - docker pull $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
+      $CI_REGISTRY_IMAGE/sausage-backend-report:latest
+    - docker push $CI_REGISTRY_IMAGE/sausage-backend-report:latest
   needs:
     - sonarqube-backend-report-sast
 telegram-notification-backend-report:
   stage: notify
   needs:
-    - upload-backend-release
+    - upload-backend-report-release
   script:
     - apk add --update curl || true
     - 'curl -X POST -H "Content-type: application/json" --data "{\"chat_id\":
