@@ -26,7 +26,7 @@ build-backend-report-job:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - echo "$DOCKERHUB_TOKEN" | docker login --username $DOCKERHUB_LOGIN --password-stdin
   script:
-    - cd backend
+    - cd backend-report
     - >
       docker build --build-arg VERSION=$VERSION --tag
       $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA . 
