@@ -1,0 +1,33 @@
+version: "3.3"
+
+services:
+  backend:
+    image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-backend:latest
+    container_name: sausage-store-backend
+    env_file: ./backend/.env
+    restart: always
+    environment:
+      # Переменные из application.properties можно заменить переменными окружения
+      SPRING_DATASOURCE_USERNAME: std-013-60
+      SPRING_DATASOURCE_PASSWORD: Testusr1234
+      SPRING_DATASOURCE_URL: jdbc:postgresql://rc1b-txenjeot0qbcbnh3.mdb.yandexcloud.net:6432/std-013-60
+      SPRING_FLYWAY_BASELINE-ON-MIGRATE: "true"
+    networks:
+      - sausage_network
+  backend-report:
+    image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/backend-report:latest
+    container_name: sausage-store-backend-report
+    environment:
+      DB: mongodb://std-013-60:Testusr1234@rc1a-xb6q7pmw36t77ryz.mdb.yandexcloud.net:27018/std-013-60?tls=true
+    networks:
+      - sausage_network
+  frontend:
+    image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-frontend:latest
+    container_name: sausage-store-frontend
+    ports:
+      - "1080:80"
+    networks:
+      - sausage_network
+
+networks:
+  sausage_network: 
