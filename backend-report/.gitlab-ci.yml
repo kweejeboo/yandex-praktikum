@@ -39,7 +39,7 @@ build-backend-report-job:
 spotbugs-sast:
   stage: test
   dependencies:
-    - build-backend-code-job
+    - build-backend-report-job
   variables:
     COMPILE: "true"
     SAST_JAVA_VERSION: 16
