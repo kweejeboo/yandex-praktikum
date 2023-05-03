@@ -20,9 +20,7 @@ docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend-report:latest
 docker stop backend-report || true
 docker rm backend-report || true
 docker-compose up -d backend-report \
-    --network=sausage_network \
     --restart always \
     --pull always \
-    --env-file report.env \
     -p 8888:8888
-    ${GITLAB_REGISTRY}/sausage-store/sausage-backend-report:latest
+#${GITLAB_REGISTRY}/sausage-store/sausage-backend-report:latest
