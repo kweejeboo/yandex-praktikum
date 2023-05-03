@@ -40,7 +40,6 @@ python_test_job:
       - .cache/pip
   before_script:
     - python3 -V
-    - source venv/bin/activate
     - pip3 install requests python-dotenv unittest
   script:
     - python3 -m unittest
