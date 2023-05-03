@@ -39,7 +39,9 @@ python_test_job:
     paths:
       - .cache/pip
   before_script:
-    - pip install -r requirements.txt
+    - cd backend-report
+    - >
+    - pip install -r requirements.txt --upgrade pip
     - python3 -V
     - pip3 install requests python-dotenv unittest
   script:
