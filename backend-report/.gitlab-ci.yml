@@ -32,8 +32,7 @@ build-backend-report-job:
     - docker push $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
 
 python_test_job:
-  stage:
-    - test
+  stage: test
   image: python:3.11-alpine
   variables:
     PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
