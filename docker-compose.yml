@@ -30,4 +30,4 @@ services:
       - sausage_network
 
 networks:
-  sausage_network: 
+  sausage_network:
