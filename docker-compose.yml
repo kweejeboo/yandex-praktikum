@@ -4,7 +4,7 @@ services:
   backend:
     image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-backend:latest
     container_name: sausage-store-backend
-    env_file: ./backend/.backend-env
+    env_file: ./backend/backend.env
     restart: always
     environment:
       SPRING_FLYWAY_BASELINE-ON-MIGRATE: "true"
@@ -15,8 +15,10 @@ services:
      context: ./backend-report/
      dockerfile: Dockerfile
     container_name: sausage-store-backend-report
+    ports:
+      8888:8888
     environment:
-      DB: mongodb://std-013-60:Testusr1234@rc1a-xb6q7pmw36t77ryz.mdb.yandexcloud.net:27018/std-013-60?tls=true
+      DB: $DB
     networks:
       - sausage_network
   frontend:
