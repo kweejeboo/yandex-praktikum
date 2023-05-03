@@ -66,7 +66,7 @@ upload-backend-report-release:
       $CI_REGISTRY_IMAGE/sausage-backend-report:latest
     - docker push $CI_REGISTRY_IMAGE/sausage-backend-report:latest
   needs:
-    - sonarqube-backend-report-sast
+    - python_test_job
 
 deploy-backend-report:
   stage: deploy
