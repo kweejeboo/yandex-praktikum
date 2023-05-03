@@ -6,7 +6,6 @@ variables:
 #  MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
   JAVA_OPTS: -XX:MaxRAMPercentage=90
 include:
-  - template: Security/SAST.gitlab-ci.yml
   - project: templates/ci
     file: DockerInDockerTemplate.yml
 stages:
