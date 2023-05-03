@@ -19,6 +19,7 @@ docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY
 docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
 docker stop backend || true
 docker rm backend || true
+ls -la
 docker-compose up -d backend-report \
     --network=sausage_network \
     --restart always \
