@@ -10,8 +10,9 @@ GIT_FOLDER=${GIT_FOLDER}
 VERSION=${VERSION}
 EOF
 
+cp ./docker-compose.yml $GIT_FOLDER/backend-report/
 cp backend-report.env $GIT_FOLDER/backend-report/
-cd ..
+
 docker network create -d bridge sausage_network || true
 docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY
 docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
