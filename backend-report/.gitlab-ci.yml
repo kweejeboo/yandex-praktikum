@@ -32,24 +32,24 @@ build-backend-report-job:
     - docker push $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
 
 python_test_job:
-stage:
-  - test
-image: python:latest
-variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-cache:
-  paths:
-    - .cache/pip
-    - venv/
-before_script:
-  - python3 -V
-  - pip3 install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
-  - pip3 install requests
-  - pip3 install python-dotenv
-script:
-  - python3 -m unittest
+  stage:
+    - test
+  image: python:3.11-alpine
+  variables:
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  cache:
+    paths:
+      - .cache/pip
+      - venv/
+  before_script:
+    - python3 -V
+    - pip3 install virtualenv
+    - virtualenv venv
+    - source venv/bin/activate
+    - pip3 install requests
+    - pip3 install python-dotenv
+  script:
+    - python3 -m unittest
 
 upload-backend-report-release:
   variables:
