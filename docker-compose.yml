@@ -12,12 +12,12 @@ services:
       - sausage_network
   backend-report:
     build:
-     context: ./backend-report/
+     context: backend-report
      dockerfile: Dockerfile
     container_name: sausage-store-backend-report
     env_file: ./backend-report/backend-report.env
     environment:
-      DB: $DB
+      DB: ${DB}
       PORT: 8888
     networks:
       - sausage_network
