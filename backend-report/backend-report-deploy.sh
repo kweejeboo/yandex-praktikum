@@ -11,7 +11,7 @@ GIT_FOLDER=${GIT_FOLDER}
 VERSION=${VERSION}
 EOF
 
-cp ${CI_PROJECT_DIR}/docker-compose.yml $GIT_FOLDER/backend-report/
+
 cp backend-report.env $GIT_FOLDER/backend-report/
 
 docker network create -d bridge sausage_network || true
@@ -19,8 +19,6 @@ docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY
 docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
 docker stop backend || true
 docker rm backend || true
-ls -la >> location.txt
-cat location.txt
 docker-compose up -d backend-report \
     --network=sausage_network \
     --restart always \
