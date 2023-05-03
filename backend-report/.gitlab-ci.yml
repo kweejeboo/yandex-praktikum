@@ -38,14 +38,10 @@ python_test_job:
   cache:
     paths:
       - .cache/pip
-      - venv/
   before_script:
     - python3 -V
-    - pip3 install virtualenv
-    - virtualenv venv
     - source venv/bin/activate
-    - pip3 install requests
-    - pip3 install python-dotenv
+    - pip3 install requests python-dotenv unittest
   script:
     - python3 -m unittest
 
