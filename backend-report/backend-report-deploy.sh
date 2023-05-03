@@ -2,7 +2,7 @@
 set -xe
 
 cat > backend-report.env <<EOF
-SPRING_DATA_MONGODB_URI=${SPRING_DATA_MONGODB_URI}
+CI_PROJECT_DIR=${CI_PROJECT_DIR}
 GITLAB_REGISTRY=${GITLAB_REGISTRY}
 GITLAB_USER=${GITLAB_USER}
 GITLAB_PASS=${GITLAB_PASS}
@@ -10,7 +10,7 @@ GIT_FOLDER=${GIT_FOLDER}
 VERSION=${VERSION}
 EOF
 
-cp ../docker-compose.yml $GIT_FOLDER/backend-report/
+cp ${CI_PROJECT_DIR}/docker-compose.yml $GIT_FOLDER/backend-report/
 cp backend-report.env $GIT_FOLDER/backend-report/
 
 docker network create -d bridge sausage_network || true
