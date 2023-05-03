@@ -1,7 +1,7 @@
 #!/bin/bash
 set -xe
 
-cat > report.env <<EOF
+cat > backend-report.env <<EOF
 SPRING_DATA_MONGODB_URI=${SPRING_DATA_MONGODB_URI}
 GITLAB_REGISTRY=${GITLAB_REGISTRY}
 GITLAB_USER=${GITLAB_USER}
