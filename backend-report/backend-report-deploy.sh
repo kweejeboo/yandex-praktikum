@@ -16,9 +16,9 @@ cp backend-report.env $GIT_FOLDER/backend-report/
 
 docker network create -d bridge sausage_network || true
 docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY
-docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
-docker stop backend || true
-docker rm backend || true
+docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend-report:latest
+docker stop backend-report || true
+docker rm backend-report || true
 docker-compose up -d backend-report \
     --network=sausage_network \
     --restart always \
