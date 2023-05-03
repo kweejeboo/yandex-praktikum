@@ -1,9 +1,9 @@
-cache:
-  paths:
-    - ${CI_PROJECT_DIR}/.m2/repository
+#cache:
+#  paths:
+#    - ${CI_PROJECT_DIR}/.m2/repository
 variables:
   VERSION: 1.0.${CI_PIPELINE_ID}
-  MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
+#  MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
   JAVA_OPTS: -XX:MaxRAMPercentage=90
 include:
   - template: Security/SAST.gitlab-ci.yml
@@ -26,15 +26,15 @@ build-backend-report-job:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - echo "$DOCKERHUB_TOKEN" | docker login --username $DOCKERHUB_LOGIN --password-stdin
   script:
-    - cd backend
+    - cd backend-report
     - >
       docker build --build-arg VERSION=$VERSION --tag
       $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA . 
     - docker push $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
-  artifacts:
-    paths:
-      - .m2/
-      - target/
+#  artifacts:
+#    paths:
+#      - .m2/
+#      - target/
       
 spotbugs-sast:
   stage: test
@@ -73,16 +73,16 @@ upload-backend-report-release:
     - until docker info; do sleep 1; done
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker pull $CI_REGISTRY_IMAGE/sausage-backend:$CI_COMMIT_SHA
-    - docker tag $CI_REGISTRY_IMAGE/sausage-backend:$CI_COMMIT_SHA
-      $CI_REGISTRY_IMAGE/sausage-backend:latest
-    - docker push $CI_REGISTRY_IMAGE/sausage-backend:latest
+    - docker pull $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
+      $CI_REGISTRY_IMAGE/sausage-backend-report:latest
+    - docker push $CI_REGISTRY_IMAGE/sausage-backend-report:latest
   needs:
-    - sonarqube-backend-sast
+    - sonarqube-backend-report-sast
 telegram-notification-backend-report:
   stage: notify
   needs:
-    - upload-backend-release
+    - upload-backend-report-release
   script:
     - apk add --update curl || true
     - 'curl -X POST -H "Content-type: application/json" --data "{\"chat_id\":
