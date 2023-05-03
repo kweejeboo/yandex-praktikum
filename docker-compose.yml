@@ -15,7 +15,9 @@ services:
     networks:
       - sausage_network
   backend-report:
-    image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/backend-report:latest
+    build:
+     context: ./backend-report/
+     dockerfile: Dockerfile
     container_name: sausage-store-backend-report
     environment:
       DB: mongodb://std-013-60:Testusr1234@rc1a-xb6q7pmw36t77ryz.mdb.yandexcloud.net:27018/std-013-60?tls=true
