@@ -10,7 +10,7 @@ GIT_FOLDER=${GIT_FOLDER}
 VERSION=${VERSION}
 EOF
 
-cp ./docker-compose.yml $GIT_FOLDER/backend-report/
+cp ../docker-compose.yml $GIT_FOLDER/backend-report/
 cp backend-report.env $GIT_FOLDER/backend-report/
 
 docker network create -d bridge sausage_network || true
