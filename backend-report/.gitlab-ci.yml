@@ -29,37 +29,26 @@ build-backend-report-job:
       docker build --build-arg VERSION=$VERSION --tag
       $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA . 
     - docker push $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
-#  artifacts:
-#    paths:
-#      - .m2/
-#      - target/
-      
-spotbugs-sast:
+
+python_test_job:
   stage: test
-  dependencies:
-    - build-backend-report-job
+  image: python:3.11-alpine
   variables:
-    COMPILE: "true"
-    SAST_JAVA_VERSION: 16
-    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository    
-  artifacts:
-    reports:
-      sast: gl-sast-report.json
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  cache:
     paths:
-      - ${CI_PROJECT_DIR}/.m2
-sonarqube-backend-report-sast:
-  stage: test
-  image: maven:3.8-openjdk-16
+      - .cache/pip
+      - venv/
+  before_script:
+    - python3 -V
+    - pip3 install virtualenv
+    - virtualenv venv
+    - source venv/bin/activate
+    - pip3 install requests
+    - pip3 install python-dotenv
   script:
-    - cd backend
-    - >
-      mvn verify sonar:sonar -Dsonar.qualitygate.wait=true
-      -Dsonar.projectKey=${SONAR_PROJECT_BACKEND_KEY}
-      -Dsonar.host.url=${SONARQUBE_URL} -Dsonar.login=${SONAR_LOGIN_BACKEND}
-      -Dsonar.projectName=${SONAR_PROJECT_BACKEND_NAME}
-  artifacts:
-    paths:
-      - ${CI_PROJECT_DIR}/.m2/repository
+    - python3 -m unittest
+
 upload-backend-report-release:
   variables:
     GIT_STRATEGY: none
@@ -76,7 +65,7 @@ upload-backend-report-release:
       $CI_REGISTRY_IMAGE/sausage-backend-report:latest
     - docker push $CI_REGISTRY_IMAGE/sausage-backend-report:latest
   needs:
-    - sonarqube-backend-report-sast
+    - python_test_job
 
 deploy-backend-report:
   stage: deploy
