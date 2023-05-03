@@ -39,6 +39,7 @@ python_test_job:
     paths:
       - .cache/pip
   before_script:
+    - docker pull $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
     - python3 -V
     - pip3 install requests python-dotenv unittest
   script:
