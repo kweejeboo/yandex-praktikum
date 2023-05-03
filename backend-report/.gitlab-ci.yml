@@ -13,7 +13,6 @@ stages:
   - build
   - test
   - release
-  - notify
   - deploy
 
 build-backend-report-job:
@@ -79,17 +78,6 @@ upload-backend-report-release:
     - docker push $CI_REGISTRY_IMAGE/sausage-backend-report:latest
   needs:
     - sonarqube-backend-report-sast
-telegram-notification-backend-report:
-  stage: notify
-  needs:
-    - upload-backend-report-release
-  script:
-    - apk add --update curl || true
-    - 'curl -X POST -H "Content-type: application/json" --data "{\"chat_id\":
-      \"-1001860249898\", \"text\": \"Вышла новая версия бэкенда сосисочной -
-      $VERSION. Скачать бэкенд-репорт можно по ссылке —
-      ${NEXUS_BACKEND_REPO_URL}/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar\"}"
-      https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage'
 
 deploy-backend-report:
   stage: deploy
@@ -114,4 +102,4 @@ deploy-backend-report:
       export "GITLAB_USER=${GITLAB_USER}";
       export "GITLAB_PASS=${GITLAB_PASS}";
       export "GIT_FOLDER=${GIT_FOLDER}";
-      /bin/bash -s " < ./backend/deploy.sh
+      /bin/bash -s " < ./backend-report/backend-report-deploy.sh
