@@ -42,7 +42,7 @@ python_test_job:
     - cd backend-report
     - >
     - pip install -r requirements.txt --upgrade pip
-    - pip3 install requests python-dotenv unittest
+    - pip3 install requests python-dotenv unittest2
   script:
 #    - python app.py
     - python3 -m unittest
