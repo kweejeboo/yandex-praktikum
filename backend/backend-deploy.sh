@@ -24,5 +24,4 @@ docker-compose up -d backend \
     --network=sausage_network \
     --restart always \
     --pull always \
-    --env-file .backend-env \
     ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
