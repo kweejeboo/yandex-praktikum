@@ -21,7 +21,7 @@ docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-frontend:latest
 docker stop sausage-frontend  || true
 docker rm sausage-frontend || true
 set -e
-docker-compose up -d sausage-frontend \
+docker-compose up -d frontend \
     --network=sausage_network \
     --restart always \
     --pull always \
