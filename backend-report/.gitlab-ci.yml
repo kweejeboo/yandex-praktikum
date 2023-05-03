@@ -77,6 +77,7 @@ deploy-backend-report:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
+    - scp ./docker-compose.yml ${DEV_USER}:${DEV_HOST}:${GIT_FOLDER}/docker-compose.yml
     - export VAULT_TOKEN="$(vault write -field=token auth/jwt/login role=sausage-store jwt=$CI_JOB_JWT)"      
     - ssh ${DEV_USER}@${DEV_HOST}
       "export "VERSION=${VERSION}";
