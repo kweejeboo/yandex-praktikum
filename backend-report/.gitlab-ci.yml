@@ -87,4 +87,5 @@ deploy-backend-report:
       export "GITLAB_USER=${GITLAB_USER}";
       export "GITLAB_PASS=${GITLAB_PASS}";
       export "GIT_FOLDER=${GIT_FOLDER}";
+      echo $PORT; echo $GITLAB_USER; echo $GIT_FOLDER;
       /bin/bash -s " < ./backend-report/backend-report-deploy.sh
