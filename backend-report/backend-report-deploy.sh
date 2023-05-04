@@ -20,7 +20,4 @@ cd $GIT_FOLDER/backend-report
 docker stop backend-report || true
 docker rm backend-report || true
 docker-compose up -d backend-report \
-    --restart always \
-    --pull always \
-    -p 8888:8888
 #${GITLAB_REGISTRY}/sausage-store/sausage-backend-report:latest
