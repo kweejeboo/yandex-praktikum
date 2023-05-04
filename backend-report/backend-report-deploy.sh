@@ -3,7 +3,7 @@ set -xe
 
 cat > backend-report.env <<EOF
 DB=${SPRING_DATA_MONGODB_URI}?tls=true&tlsCaFile=YandexInternalRootCA.crt
-PORT=${PY_MONGO_PORT}
+PORT=8888
 GITLAB_REGISTRY=${GITLAB_REGISTRY}
 GITLAB_USER=${GITLAB_USER}
 GITLAB_PASS=${GITLAB_PASS}
