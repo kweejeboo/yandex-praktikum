@@ -20,7 +20,7 @@ services:
     networks:
       - sausage_network
     ports:
-      - '8888:8888"
+      - "8888:8888"
   frontend:
     image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-frontend:latest
     container_name: sausage-store-frontend
@@ -31,3 +31,4 @@ services:
 
 networks:
   sausage_network:
+          
