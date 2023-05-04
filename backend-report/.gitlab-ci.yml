@@ -82,6 +82,7 @@ deploy-backend-report:
     - ssh ${DEV_USER}@${DEV_HOST}
       "export "VERSION=${VERSION}";
       export "SPRING_DATA_MONGODB_URI=$(vault kv get -field=spring.data.mongodb.uri secret/sausage-store)";
+      export "PORT=${PY_MONGO_PORT}"
       export "CI_PROJECT_DIR=${CI_PROJECT_DIR}"
       export "GITLAB_REGISTRY=${GITLAB_REGISTRY}";
       export "GITLAB_USER=${GITLAB_USER}";
