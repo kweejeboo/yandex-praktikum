@@ -17,7 +17,7 @@ services:
     container_name: sausage-store-backend-report
     env_file: 
       - ./backend-report/backend-report.env
-    restart: always 
+    restart: always
     networks:
       - sausage_network
     ports:
