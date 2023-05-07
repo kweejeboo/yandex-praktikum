@@ -14,7 +14,7 @@ VERSION=${VERSION}
 EOF
 
 cp backend.env $GIT_FOLDER/backend/
-
+cd $GIT_FOLDER/frontend/
 docker network create -d bridge sausage_network || true
 docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY
 docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
