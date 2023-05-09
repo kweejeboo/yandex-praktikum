@@ -2,6 +2,13 @@
 #Если свалится одна из команд, рухнет и весь скрипт
 set -xe
 
+cat > frontend.env <<EOF
+GITLAB_REGISTRY=${GITLAB_REGISTRY}
+GITLAB_USER=${GITLAB_USER}
+GITLAB_PASS=${GITLAB_PASS}
+GIT_FOLDER=${GIT_FOLDER}
+EOF
+
 cd $GIT_FOLDER/frontend/
 docker network create -d bridge sausage_network || true
 docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY
