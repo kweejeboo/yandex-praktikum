@@ -18,6 +18,8 @@ services:
     env_file: 
       - ./backend-report/backend-report.env
     restart: always
+    ports:
+      - "8888:8888"
     networks:
       - sausage_network
   frontend:
