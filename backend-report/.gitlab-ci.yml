@@ -24,7 +24,7 @@ build-backend-report-job:
     - >
       docker build --build-arg VERSION=$VERSION --tag
       $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA . 
-- docker push $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
      
 python-test-job:
   stage: test
