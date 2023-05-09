@@ -5,10 +5,28 @@ include:
   - project: templates/ci
     file: DockerInDockerTemplate.yml
 stages:
+  - build
   - test
+  - release
   - deploy
 
-python_test_job:
+build-backend-report-job:
+  stage: build
+  image: docker:20.10.12-dind-rootless
+  services:
+    - docker:dind
+  before_script:
+    - until docker info; do sleep 1; done
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "$DOCKERHUB_TOKEN" | docker login --username $DOCKERHUB_LOGIN --password-stdin
+  script:
+    - cd backend-report
+    - >
+      docker build --build-arg VERSION=$VERSION --tag
+      $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA . 
+- docker push $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
+     
+python-test-job:
   stage: test
   image: python:latest
   variables:
@@ -23,6 +41,26 @@ python_test_job:
     - pip3 install requests python-dotenv unittest2
   script:
     - python3 -m unittest
+  needs:
+    - build-backend-report-job
+
+upload-backend-report-release:
+  variables:
+    GIT_STRATEGY: none
+  image: docker:20.10.12-dind-rootless
+  services:
+    - docker:dind
+  stage: release
+  before_script:
+    - until docker info; do sleep 1; done
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker pull $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY_IMAGE/sausage-backend-report:$CI_COMMIT_SHA
+      $CI_REGISTRY_IMAGE/sausage-backend-report:latest
+    - docker push $CI_REGISTRY_IMAGE/sausage-backend-report:latest
+  needs:
+    - python-test-job
 
 deploy-backend-report:
   stage: deploy
