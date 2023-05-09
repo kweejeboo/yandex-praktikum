@@ -3,7 +3,7 @@
 set -xe
 
 
-cp frontend.env $GIT_FOLDER/frontend/
+
 cd $GIT_FOLDER/frontend/
 docker network create -d bridge sausage_network || true
 docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY

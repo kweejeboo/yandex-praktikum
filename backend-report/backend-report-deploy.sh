@@ -12,7 +12,7 @@ VERSION=${VERSION}
 EOF
 
 
-cp backend-report.env $GIT_FOLDER/backend-report/
+
 cd $GIT_FOLDER/backend-report
 docker-compose stop backend-report || true
 docker-compose rm backend-report || true
