@@ -18,7 +18,6 @@ docker network create -d bridge sausage_network || true
 docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY
 docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
 docker-compose stop backend || true
-docker-compose rm backend || true
 docker-compose up -d backend \
     --network=sausage_network \
     --restart always \
