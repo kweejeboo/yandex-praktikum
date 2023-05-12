@@ -114,4 +114,4 @@ deploy-backend:
       export "GITLAB_USER=${GITLAB_USER}";
       export "GITLAB_PASS=${GITLAB_PASS}";
       export "GIT_FOLDER=${GIT_FOLDER}";
-      /bin/bash -s " < ./backend/deploy.sh
+      /bin/bash -s " < ./backend/backend-deploy.sh
