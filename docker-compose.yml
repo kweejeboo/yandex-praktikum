@@ -3,18 +3,15 @@ version: "3.3"
 services:
   backend:
     image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-backend:latest
-    container_name: sausage-store-backend
     env_file: ./backend/backend.env
     restart: always
     environment:
       SPRING_FLYWAY_BASELINE-ON-MIGRATE: "true"
+      VIRTUAL_HOST: "backend"
     networks:
       - sausage_network
   backend-report:
-    build:
-     context: backend-report
-     dockerfile: Dockerfile
-    container_name: sausage-store-backend-report
+    image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-backend-report:latest
     env_file: 
       - ./backend-report/backend-report.env
     restart: always
@@ -23,15 +20,17 @@ services:
     networks:
       - sausage_network
   frontend:
-    image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-frontend:latest
-    container_name: sausage-store-frontend
-    env_file:
-      - ./frontend/frontend.env
     restart: always
+    image: frontend-nginx
     ports:
       - "1080:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    environment:
+      DEFAULT_HOST: "backend"
+    container_name: frontend
     networks:
-      - sausage_network
+      - sausage_network 
 
 networks:
   sausage_network:
