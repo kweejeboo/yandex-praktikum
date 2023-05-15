@@ -21,7 +21,7 @@ services:
       - sausage_network
   frontend:
     restart: always
-    image: frontend-nginx
+    image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-frontend:latest
     env_file:
       - ./frontend/frontend.env
     ports:
