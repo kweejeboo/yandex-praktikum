@@ -15,5 +15,6 @@ EOF
 
 cd $GIT_FOLDER/backend-report
 docker-compose stop backend-report || true
+docker-compose rm backend-report || true
 docker-compose up -d backend-report
 
