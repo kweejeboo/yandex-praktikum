@@ -22,6 +22,8 @@ services:
   frontend:
     restart: always
     image: frontend-nginx
+    env_file:
+      - ./frontend/frontend.env
     ports:
       - "1080:80"
     volumes:
