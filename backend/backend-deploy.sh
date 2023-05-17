@@ -31,9 +31,9 @@ else
 fi
 
 echo "Starting "$NEW" container"
-docker-compose --project-name=$NEW  up -d --build --force-recreate
+docker-compose up -d --build --force-recreate $NEW
 
-until docker container ls --filter health=healthy --filter name=$NEW
+until $(docker container ls --filter health=healthy --filter name=$NEW)
 do
     echo "Waiting for healthcheck to be completed"
     sleep 1
@@ -41,6 +41,6 @@ done
 echo -e "\nHealthcheck status: Healthy"
 
 echo "Stopping "$OLD" container"
-docker-compose --project-name=$OLD down
+docker-compose down $OLD
 docker system prune -f
 docker volume prune -f
