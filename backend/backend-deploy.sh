@@ -19,4 +19,4 @@ docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY
 docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
 docker-compose stop backend || true
 docker-compose rm -f backend || true
-docker-compose up -d backend 
+docker-compose up -d backend-blue 
