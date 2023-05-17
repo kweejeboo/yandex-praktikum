@@ -1,22 +1,11 @@
-FROM node:16-alpine3.17 as builder 
-# Create app directory
+FROM node:16.17.0-bullseye-slim as builder
 WORKDIR /usr/src/app
-COPY *.json ./
-RUN npm install && npm install -g @angular/cli
-COPY ./src ./src
-RUN npm run build
+COPY . .
+RUN npm install && npm run build
 
 
-
-#release stage
-FROM node:16-alpine3.17 as release
+FROM nginxproxy/nginx-proxy
 WORKDIR /app
-RUN adduser -S -s /bin/false -G www-data www-data -D -H
-COPY --chown=www-data:www-data --from=builder /usr/src/app/dist ./dist
-COPY package*.json .
-RUN npm install -g http-server
-USER www-data
-EXPOSE 80
+COPY --from=builder /usr/src/app/dist/frontend /usr/share/nginx/html
+COPY nginx.tmpl .
 
-
-ENTRYPOINT ["http-server", "dist/frontend/", "-p", "80", "--proxy", "http://backend:8080"]
