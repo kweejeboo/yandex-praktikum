@@ -14,7 +14,6 @@ services:
       test: curl --fail -s http://localhost:8080/actuator/health
       interval: 30s
       timeout: 10s
-      start_period: 20s
       retries: 6 
   backend-blue:
     image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-backend:latest
@@ -29,7 +28,6 @@ services:
       test: curl --fail -s http://localhost:8080/actuator/health
       interval: 30s
       timeout: 10s
-      start_period: 20s
       retries: 6 
   backend-report:
     image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-backend-report:latest
