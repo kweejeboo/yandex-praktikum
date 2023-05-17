@@ -38,10 +38,10 @@ do
     echo "Waiting for healthcheck to be completed"
     sleep 1
 done
-echo -e "\nHealthcheck status: Healthy"
+echo "Healthcheck status: Healthy"
 
 echo "Stopping "$OLD" container"
 docker-compose stop $OLD
-docker-compose rm $OLD
+docker-compose rm -f $OLD
 docker system prune -f
 docker volume prune -f
