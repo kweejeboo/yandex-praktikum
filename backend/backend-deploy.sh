@@ -41,6 +41,7 @@ done
 echo -e "\nHealthcheck status: Healthy"
 
 echo "Stopping "$OLD" container"
-docker-compose down $OLD
+docker-compose stop $OLD
+docker-compose rm $OLD
 docker system prune -f
 docker volume prune -f
