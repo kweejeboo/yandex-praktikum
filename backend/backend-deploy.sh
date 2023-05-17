@@ -33,7 +33,7 @@ fi
 echo "Starting "$NEW" container"
 docker-compose up -d --build --force-recreate $NEW
 
-until $(docker container ls --filter health=healthy --filter name=$NEW)
+until [ "$(docker container ls --filter health=healthy --filter name=$NEW)" ]
 do
     echo "Waiting for healthcheck to be completed"
     sleep 1
