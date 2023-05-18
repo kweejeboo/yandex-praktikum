@@ -1,7 +1,8 @@
 version: "3.3"
 
 services:
-  backend-green:
+  backend-green: &backend
+    container_name: backend-green
     image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-backend:latest
     env_file: ./backend/backend.env
     restart: always
@@ -16,19 +17,21 @@ services:
       timeout: 10s
       retries: 6 
   backend-blue:
-    image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-backend:latest
-    env_file: ./backend/backend.env
-    restart: always
-    environment:
-      SPRING_FLYWAY_BASELINE-ON-MIGRATE: "true"
-      VIRTUAL_HOST: "backend"
-    networks:
-      - sausage_network
-    healthcheck:
-      test: curl --fail -s http://localhost:8080/actuator/health
-      interval: 30s
-      timeout: 10s
-      retries: 6 
+    container_name: backend-blue
+    <<: *backend
+    #image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-backend:latest
+    #env_file: ./backend/backend.env
+    #restart: always
+    #environment:
+    #  SPRING_FLYWAY_BASELINE-ON-MIGRATE: "true"
+    # VIRTUAL_HOST: "backend"
+    #networks:
+    #  - sausage_network
+    #healthcheck:
+    #  test: curl --fail -s http://localhost:8080/actuator/health
+    #  interval: 30s
+    #  timeout: 10s
+    #  retries: 6 
   backend-report:
     image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-backend-report:latest
     env_file: 
