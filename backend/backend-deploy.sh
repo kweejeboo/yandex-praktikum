@@ -14,9 +14,29 @@ VERSION=${VERSION}
 EOF
 
 cd $GIT_FOLDER
-docker network create -d bridge sausage_network || true
 docker login -u $GITLAB_USER -p $GITLAB_PASS $GITLAB_REGISTRY
 docker pull ${GITLAB_REGISTRY}/sausage-store/sausage-backend:latest
-docker-compose stop backend || true
-docker-compose rm backend || true
-docker-compose up -d backend 
+if [ "$(docker ps -f name=backend-blue -q)" ]
+then
+    NEW="backend-green"
+    OLD="backend-blue"
+else
+    NEW="backend-blue"
+    OLD="backend-green"
+fi
+echo "Starting "$NEW" container"
+docker-compose up -d --build --force-recreate $NEW
+until [ "$(docker container ls --filter health=healthy --filter name=$NEW)" ]
+do
+    echo "Waiting for healthcheck to be completed"
+    sleep 1
+done
+echo "Healthcheck status: Healthy"
+
+sleep 5
+
+echo "Stopping "$OLD" container"
+docker-compose stop $OLD
+docker-compose rm -f $OLD
+docker system prune -f
+
