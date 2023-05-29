@@ -4,8 +4,8 @@ COPY . .
 RUN npm install && npm run build
 
 
-FROM nginxproxy/nginx-proxy
+FROM nginx:alpine-slim
 WORKDIR /app
 COPY --from=builder /usr/src/app/dist/frontend /usr/share/nginx/html
-COPY nginx.tmpl .
+EXPOSE 8080
 
