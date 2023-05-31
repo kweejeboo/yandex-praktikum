@@ -1,7 +1,7 @@
 version: "3.3"
 
 services:
-  backend-green: &backend
+  backend:
     container_name: backend-green
     image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-backend:latest
     env_file: ./backend/backend.env
@@ -16,9 +16,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 6 
-  backend-blue:
-    container_name: backend-blue
-    <<: *backend
   backend-report:
     image: gitlab.praktikum-services.ru:5050/std-013-60/sausage-store/sausage-backend-report:latest
     env_file: 
